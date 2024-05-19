@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { MAX_WIDTH } from '@/constants/style';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`mx-auto max-w-lg shadow-xl bg-gray-100 text-neutral-900 ${inter.className}`}>
+      <body className={`mx-auto ${MAX_WIDTH} shadow-xl bg-gray-100 text-neutral-900 ${inter.className}`}>
         <main className="h-screen bg-white">{children}</main>
       </body>
     </html>
