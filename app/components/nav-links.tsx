@@ -32,11 +32,11 @@ export default function NavLinks() {
           <Link
             key={`link-${index}`}
             href={link.href}
-            className="h-10 px-3 flex grow items-center justify-center gap-2 rounded-md text-sm font-medium hover:bg-teal-50 bg- hover:text-green-700 md:flex-none md:justify-start md:h-12"
+            className="h-10 md:h-12 px-3 flex-center grow gap-2 rounded-md text-sm font-medium"
           >
             <div className="flex flex-col items-center">
               {pathname === link.href ? <SelectedLinkIcon className="w-6" /> : <DefaultLinkIcon className="w-6" />}
-              <p className="hidden md:block">{link.name}</p>
+              <p>{link.name}</p>
             </div>
           </Link>
         );
