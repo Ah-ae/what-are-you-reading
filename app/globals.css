@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a {
+    @apply text-green-800;
+  }
+}
+
+@layer components {
+  .primary-btn {
+    @apply w-full bg-green-800 hover:bg-green-700 text-white font-medium rounded-md text-center transition-colors;
+  }
+}
+
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
