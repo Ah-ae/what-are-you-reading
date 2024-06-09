@@ -1,7 +1,24 @@
 'use server';
 
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
+import { redirect } from 'next/navigation';
 import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR } from '@/constants';
+import db from '@/lib/db';
+import { login as handleLogin } from '@/utils/login';
+
+const checkUsernameExists = async (username: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return Boolean(user);
+};
 
 const formSchema = z.object({
   username: z
@@ -11,7 +28,8 @@ const formSchema = z.object({
     })
     .nonempty('아이디는 필수 입력 항목입니다.')
     .toLowerCase()
-    .trim(),
+    .trim()
+    .refine(checkUsernameExists, '등록되지 않은 아이디입니다.'),
   password: z
     .string({
       invalid_type_error: '비밀번호는 문자로 이루어져야 합니다.',
@@ -32,8 +50,27 @@ export async function login(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
-    // TODO : if the user is found, check password hash
-    console.log('user log in');
-    console.log(result.data);
+    const user = await db.user.findUnique({
+      where: {
+        username: result.data.username,
+      },
+      select: {
+        id: true,
+        password: true,
+      },
+    });
+
+    const isPasswordMatch = await bcrypt.compare(result.data.password, user!.password ?? '');
+    if (isPasswordMatch) {
+      handleLogin(user!.id);
+      redirect('/mine');
+    } else {
+      return {
+        fieldErrors: {
+          username: [],
+          password: ['비밀번호가 일치하지 않습니다.'],
+        },
+      };
+    }
   }
 }

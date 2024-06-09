@@ -2,8 +2,10 @@
 
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
+import { redirect } from 'next/navigation';
 import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR, DISALLOWED_USERNAME_LIST } from '@/constants';
 import db from '@/lib/db';
+import { login } from '@/utils/login';
 
 const checkUserName = (username: string) => {
   for (const disallowedWord of DISALLOWED_USERNAME_LIST) {
@@ -81,10 +83,6 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
-    // TODO : 계정 생성, 로그인, 리다이렉션('/mine')
-    console.log('created the account');
-    console.log(result.data);
-
     const hashedPassword = await bcrypt.hash(result.data.password, 12);
 
     const user = await db.user.create({
@@ -97,5 +95,8 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
+
+    login(user.id);
+    redirect('/mine');
   }
 }
