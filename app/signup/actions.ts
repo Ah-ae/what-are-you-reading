@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR, DISALLOWED_USERNAME_LIST } from '@/constants';
+import db from '@/lib/db';
 
 const checkUserName = (username: string) => {
   for (const disallowedWord of DISALLOWED_USERNAME_LIST) {
@@ -14,6 +15,19 @@ const checkUserName = (username: string) => {
 const checkPasswords = ({ password, confirm_password }: { password: string; confirm_password: string }) =>
   password === confirm_password;
 
+const checkUniqueUsername = async (username: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return !Boolean(user);
+};
+
 const formSchema = z
   .object({
     username: z
@@ -24,7 +38,8 @@ const formSchema = z
       .nonempty('아이디는 필수 입력 항목입니다.') // 빈 문자열 체크
       .toLowerCase()
       .trim()
-      .refine(checkUserName, '아이디에 부적절한 단어가 포함되어 있습니다. 다른 아이디를 입력해 주세요.'),
+      .refine(checkUserName, '아이디에 부적절한 단어가 포함되어 있습니다. 다른 아이디를 입력해 주세요.')
+      .refine(checkUniqueUsername, '이미 사용 중인 아이디입니다.'),
     name: z
       .string({
         invalid_type_error: '이름(닉네임)은 문자로 이루어져야 합니다.',
@@ -61,7 +76,7 @@ export async function createAccount(prevState: any, formData: FormData) {
     confirm_password: formData.get('confirm_password'),
   };
 
-  const result = formSchema.safeParse(data);
+  const result = await formSchema.safeParseAsync(data);
   if (!result.success) {
     return result.error.flatten();
   } else {
