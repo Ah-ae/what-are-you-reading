@@ -80,9 +80,7 @@ export async function createAccount(prevState: any, formData: FormData) {
   };
 
   const result = await formSchema.safeParseAsync(data);
-  if (!result.success) {
-    return result.error.flatten();
-  } else {
+  if (result.success) {
     const hashedPassword = await bcrypt.hash(result.data.password, 12);
 
     const user = await db.user.create({
@@ -98,5 +96,7 @@ export async function createAccount(prevState: any, formData: FormData) {
 
     login(user.id);
     redirect('/mine');
+  } else {
+    return result.error.flatten();
   }
 }
