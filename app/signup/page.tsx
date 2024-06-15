@@ -4,6 +4,8 @@ import { useFormState } from 'react-dom';
 import { createAccount } from './actions';
 import Input from '@/components/input';
 import Button from '@/components/button';
+import Divider from '@/components/divider';
+import KakaoLogin from '@/components/kakao-login';
 import { PASSWORD_MIN_LENGTH } from '@/constants';
 
 export default function CreateAccount() {
@@ -36,6 +38,8 @@ export default function CreateAccount() {
         />
         <Button text="회원 가입" />
       </form>
+      <Divider>또는</Divider>
+      <KakaoLogin />
     </div>
   );
 }
