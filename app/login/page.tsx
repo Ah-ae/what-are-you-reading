@@ -4,6 +4,8 @@ import { useFormState } from 'react-dom';
 import { login } from './actions';
 import Input from '@/components/input';
 import Button from '@/components/button';
+import Divider from '@/components/divider';
+import KakaoLogin from '@/components/kakao-login';
 import { PASSWORD_MIN_LENGTH } from '@/constants';
 
 export default function Login() {
@@ -27,6 +29,8 @@ export default function Login() {
         />
         <Button text="로그인" />
       </form>
+      <Divider>또는</Divider>
+      <KakaoLogin />
     </div>
   );
 }
