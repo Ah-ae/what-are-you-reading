@@ -47,9 +47,7 @@ export async function login(prevState: any, formData: FormData) {
   };
 
   const result = await formSchema.spa(data);
-  if (!result.success) {
-    return result.error.flatten();
-  } else {
+  if (result.success) {
     const user = await db.user.findUnique({
       where: {
         username: result.data.username,
@@ -72,5 +70,7 @@ export async function login(prevState: any, formData: FormData) {
         },
       };
     }
+  } else {
+    return result.error.flatten();
   }
 }
