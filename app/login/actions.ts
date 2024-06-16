@@ -60,7 +60,7 @@ export async function login(prevState: any, formData: FormData) {
 
     const isPasswordMatch = await bcrypt.compare(result.data.password, user!.password ?? '');
     if (isPasswordMatch) {
-      handleLogin(user!.id);
+      await handleLogin(user!.id);
       redirect('/mine');
     } else {
       return {

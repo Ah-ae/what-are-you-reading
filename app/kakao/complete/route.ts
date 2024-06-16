@@ -80,8 +80,8 @@ export async function GET(request: NextRequest) {
   });
 
   if (userByKakaoId) {
-    login(userByKakaoId.id);
-    return redirect('/mine');
+    await login(userByKakaoId.id);
+    redirect('/mine');
   }
 
   const existingUserByUsername = await db.user.findUnique({
@@ -105,6 +105,6 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  login(newUser.id);
-  return redirect('/mine');
+  await login(newUser.id);
+  redirect('/mine');
 }
