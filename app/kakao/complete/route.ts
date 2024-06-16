@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import { redirect } from 'next/navigation';
 import db from '@/lib/db';
 import { login } from '@/utils/login';
+import { APP_BASE_URL } from '@/constants';
 
 async function getAccessToken(code: string): Promise<{
   access_token: string | null;
@@ -11,7 +12,7 @@ async function getAccessToken(code: string): Promise<{
   error: string | null;
 }> {
   const baseURL = 'https://kauth.kakao.com/oauth/token';
-  const redirectURL = 'http://localhost:3000/kakao/complete';
+  const redirectURL = `${APP_BASE_URL}/kakao/complete`;
   const params = {
     grant_type: 'authorization_code',
     client_id: process.env.KAKAO_REST_API_KEY!,
