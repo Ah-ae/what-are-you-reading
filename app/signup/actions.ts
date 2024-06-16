@@ -94,7 +94,7 @@ export async function createAccount(prevState: any, formData: FormData) {
       },
     });
 
-    login(user.id);
+    await login(user.id);
     redirect('/mine');
   } else {
     return result.error.flatten();
