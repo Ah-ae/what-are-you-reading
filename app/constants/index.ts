@@ -1,3 +1,6 @@
+const IS_DEV_MODE = process.env.NODE_ENV === 'development';
+export const APP_BASE_URL = IS_DEV_MODE ? 'http://localhost:3000' : 'https://what-are-you-reading.vercel.app';
+
 export const PASSWORD_MIN_LENGTH = 4;
 export const PASSWORD_REGEX = new RegExp(
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[#?!@$%^&*-]).+$/, // 비밀번호가 소문자, 대문자, 숫자, 특수문자의 일부를 모두 포함하고 있는지 검사

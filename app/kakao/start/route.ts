@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
+import { APP_BASE_URL } from '@/constants';
 
 export function GET() {
   const baseURL = 'https://kauth.kakao.com/oauth/authorize';
-  // TODO: 배포 후에 redirectURL 변경 필요 (localhost 대신 도메인)
-  const redirectURL = 'http://localhost:3000/kakao/complete';
+  const redirectURL = `${APP_BASE_URL}/kakao/complete`;
   const params = {
     client_id: process.env.KAKAO_REST_API_KEY!,
     redirect_uri: redirectURL,
