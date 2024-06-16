@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
       username: existingUserByUsername ? `kakao-${id}` : String(id),
       name: nickname,
       kakao_id: String(id),
-      avatar: thumbnail_image_url,
+      avatar: thumbnail_image_url ?? null,
     },
     select: {
       id: true,
