@@ -11,7 +11,7 @@ async function getAccessToken(code: string): Promise<{
   refresh_token_expires_in: number;
   error: string | null;
 }> {
-  const baseURL = 'https://kauth.kakao.com/oauth/token';
+  const kakaoTokenURL = 'https://kauth.kakao.com/oauth/token';
   const redirectURL = `${APP_BASE_URL}/kakao/complete`;
   const params = {
     grant_type: 'authorization_code',
@@ -21,7 +21,7 @@ async function getAccessToken(code: string): Promise<{
     client_secret: process.env.KAKAO_CLIENT_SECRET!,
   };
   const formattedParams = new URLSearchParams(params).toString();
-  const finalURL = `${baseURL}?${formattedParams}`;
+  const finalURL = `${kakaoTokenURL}?${formattedParams}`;
 
   const response = await fetch(finalURL, {
     method: 'POST',
@@ -36,9 +36,9 @@ async function getAccessToken(code: string): Promise<{
 }
 
 async function getKakaoUserProfile(access_token: string) {
-  const baseURL = 'https://kapi.kakao.com/v2/user/me';
+  const kakaoUserProfileURL = 'https://kapi.kakao.com/v2/user/me';
 
-  const response = await fetch(baseURL, {
+  const response = await fetch(kakaoUserProfileURL, {
     headers: {
       Authorization: `Bearer ${access_token}`,
       'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
