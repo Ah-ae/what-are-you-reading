@@ -14,13 +14,68 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  username    String   @unique
+  id          Int        @id @default(autoincrement())
+  username    String     @unique
   name        String
   password    String?
-  kakao_id    String?  @unique
+  kakao_id    String?    @unique
   avatar      String?
   description String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  bookshelf   Bookshelf?
+}
+
+model Bookshelf {
+  id      Int    @id @default(autoincrement())
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId Int    @unique
+  books   Book[]
+}
+
+model Book {
+  id          Int              @id @default(autoincrement())
+  title       String
+  datetime    DateTime // 출간일
+  authors     AuthorBook[]
+  translators TranslatorBook[]
+  price       Int
+  publisher   String
+  thumbnail   String
+  url         String // 책 정보에 대한 Daum 검색 결과 페이지 URL 
+  isbn        String
+  rating      Int              @default(0)
+  review      String? // 사용자가 남기는 한 줄 서평 
+  Bookshelf   Bookshelf        @relation(fields: [bookshelfId], references: [id])
+  bookshelfId Int
+}
+
+model Author {
+  id    Int          @id @default(autoincrement())
+  name  String
+  books AuthorBook[]
+}
+
+// 중간 테이블
+model AuthorBook {
+  id       Int    @id @default(autoincrement())
+  book     Book   @relation(fields: [bookId], references: [id])
+  bookId   Int
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId Int
+}
+
+model Translator {
+  id    Int              @id @default(autoincrement())
+  name  String
+  books TranslatorBook[]
+}
+
+// 중간 테이블
+model TranslatorBook {
+  id           Int        @id @default(autoincrement())
+  book         Book       @relation(fields: [bookId], references: [id])
+  bookId       Int
+  Translator   Translator @relation(fields: [translatorId], references: [id])
+  translatorId Int
 }
