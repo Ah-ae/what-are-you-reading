@@ -1,7 +1,7 @@
-import BookThumbnail from '@/components/book-thumbnail';
 import { getUser } from '@/utils/getUser';
 import { fetchBooks } from '@/lib/data';
-import Header from '@/components/header';
+import Header from '@/components/bookshelf/header';
+import BookThumbnail from '@/components/bookshelf/book-thumbnail';
 
 export default async function Mine() {
   const user = await getUser();
@@ -14,8 +14,8 @@ export default async function Mine() {
         <div className="flex justify-center pt-10">
           <div className="px-6">
             <div className="grid grid-cols-3 gap-10">
-              {books.map((book, index) => (
-                <BookThumbnail key={index} thumbnail={book.thumbnail} title={book.title} />
+              {books.map((book) => (
+                <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
               ))}
             </div>
           </div>
