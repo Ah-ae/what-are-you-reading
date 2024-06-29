@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -48,6 +48,10 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
   const currentMode = searchParams.get('mode') || 'view';
   const [isSelected, setIsSelected] = useState(false);
 
+  useEffect(() => {
+    if (currentMode === 'view') sessionStorage.removeItem(SELECTED_ITEMS_KEY);
+  }, [currentMode]);
+
   if (!width || !height) {
     return <span>Invalid thumbnail URL</span>;
   }
@@ -56,10 +60,6 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
     setIsSelected((prev) => !prev);
     updateSelectedItemsInSessionStorage(id, isSelected);
   };
-
-  if (currentMode === 'view') {
-    sessionStorage.removeItem(SELECTED_ITEMS_KEY);
-  }
 
   return currentMode === 'view' ? (
     <Link href={`/mine/${id}`} className="cursor-pointer">
