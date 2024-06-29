@@ -12,6 +12,9 @@ const config: Config = {
       textColor: {
         primary: colors.gray[900],
       },
+      colors: {
+        'main-theme-color': '#166534', // green-800의 HEX 값
+      },
     },
   },
   plugins: [],
