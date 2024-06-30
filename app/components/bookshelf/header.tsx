@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
+import { SELECTED_ITEMS_KEY } from '@/constants';
 
 type Props = { title: string };
 
@@ -38,6 +39,9 @@ function ToggleButtons() {
 function ActionButtons() {
   const searchParams = useSearchParams();
   const currentMode = searchParams.get('mode') || 'view';
+  const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
+  const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
+  console.log('items', selectedItems);
 
   return (
     <div className="w-[28px] flex gap-3">

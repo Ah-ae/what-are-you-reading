@@ -41,3 +41,5 @@ export const DISALLOWED_USERNAME_LIST = [
   'wanker',
   'whore',
 ];
+
+export const SELECTED_ITEMS_KEY = 'items';
