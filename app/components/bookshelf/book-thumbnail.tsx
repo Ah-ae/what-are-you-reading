@@ -36,6 +36,10 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
 
   useEffect(() => {
     if (currentMode === 'view') {
+      // local state isSelected 값 초기화
+      setIsSelected(false);
+
+      // url params에 selectedItems 값 삭제
       const params = new URLSearchParams(searchParams);
       params.delete(SELECTED_ITEMS_KEY);
       replace(`${pathname}?${params.toString()}`);
