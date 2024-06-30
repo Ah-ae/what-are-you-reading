@@ -31,7 +31,7 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const currentMode = searchParams.get('mode') || 'view';
+  const currentMode = searchParams.get('mode') || 'view'; // 'view' | 'edit'
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
@@ -56,12 +56,12 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
 
     // url params에 selectedItems 값 업데이트
     const params = new URLSearchParams(searchParams);
-    const items = params.get(SELECTED_ITEMS_KEY);
-    let updatedItems = items ? items.split(',').map(Number) : [];
+    const selectedItemsParams = params.get(SELECTED_ITEMS_KEY);
+    let updatedItems = selectedItemsParams ? selectedItemsParams.split(',').map(Number) : [];
 
     if (isSelected) {
       // id 삭제
-      updatedItems = updatedItems.filter((itemId: number) => itemId !== id);
+      updatedItems = updatedItems.filter((itemId) => itemId !== id);
     } else {
       // id 추가
       updatedItems.push(id);
