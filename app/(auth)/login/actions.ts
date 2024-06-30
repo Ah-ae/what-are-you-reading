@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR } from '@/constants';
 import db from '@/lib/db';
-import { login as handleLogin } from '@/utils/login';
+import { login as handleLogin } from '@/utils/auth';
 
 const checkUsernameExists = async (username: string) => {
   const user = await db.user.findUnique({
