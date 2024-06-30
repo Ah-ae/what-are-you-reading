@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import clsx from 'clsx';
-import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
+import { DeleteBooks } from '@/components/bookshelf/buttons';
 import { SELECTED_ITEMS_KEY } from '@/constants';
 
 type Props = { title: string };
@@ -43,7 +43,6 @@ function ActionButtons() {
   const currentMode = searchParams.get('mode') || 'view';
   const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
   const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
-  const disabled = selectedItems.length === 0;
   console.log('items', selectedItems);
 
   return (
@@ -54,14 +53,7 @@ function ActionButtons() {
         </Link>
       ) : (
         <>
-          <button disabled={disabled}>
-            <TrashIcon
-              className={clsx('size-6 font-bold', {
-                'text-main-theme-color': selectedItems.length > 0,
-                'text-neutral-400': disabled,
-              })}
-            />
-          </button>
+          <DeleteBooks ids={selectedItems} />
           <button>
             <Bars3BottomLeftIcon className="size-6 font-bold text-main-theme-color" />
           </button>
