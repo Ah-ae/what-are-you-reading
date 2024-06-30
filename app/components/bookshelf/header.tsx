@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import { SELECTED_ITEMS_KEY } from '@/constants';
 
@@ -20,19 +20,20 @@ export default function Header({ title }: Props) {
 function ToggleButtons() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { replace } = useRouter();
   const currentMode = searchParams.get('mode') || 'view';
 
-  const toggleMode = () => {
+  const handleClick = () => {
     const newMode = currentMode === 'view' ? 'edit' : 'view';
     const params = new URLSearchParams(searchParams);
     params.set('mode', newMode);
-    return `${pathname}?${params}`;
+    replace(`${pathname}?${params}`);
   };
 
   return (
-    <Link href={toggleMode()} className="text-lg font-medium text-main-theme-color">
+    <button onClick={handleClick} className="text-lg font-medium text-main-theme-color">
       {currentMode === 'view' ? '편집' : '완료'}
-    </Link>
+    </button>
   );
 }
 

@@ -35,7 +35,11 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
-    if (currentMode === 'view') sessionStorage.removeItem(SELECTED_ITEMS_KEY);
+    if (currentMode === 'view') {
+      const params = new URLSearchParams(searchParams);
+      params.delete(SELECTED_ITEMS_KEY);
+      replace(`${pathname}?${params.toString()}`);
+    }
   }, [currentMode]);
 
   if (!width || !height) {
