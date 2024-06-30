@@ -1,6 +1,6 @@
 import { getUser, fetchBooks } from '@/lib/data';
-import Header from '@/components/bookshelf/header';
-import BookThumbnail from '@/components/bookshelf/book-thumbnail';
+import Header from '@/ui/bookshelf/header';
+import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
 
 export default async function Mine() {
   const user = await getUser();

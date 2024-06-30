@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
-import { DeleteBooks } from '@/components/bookshelf/buttons';
+import { DeleteBooks } from '@/ui/bookshelf/buttons';
 import { SELECTED_ITEMS_KEY } from '@/constants';
 
 type Props = { title: string };

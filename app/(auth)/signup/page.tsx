@@ -2,10 +2,10 @@
 
 import { useFormState } from 'react-dom';
 import { createAccount } from './actions';
-import Input from '@/components/input';
-import Button from '@/components/button';
-import Divider from '@/components/divider';
-import KakaoLogin from '@/components/kakao-login';
+import Input from '@/ui/input';
+import Button from '@/ui/button';
+import Divider from '@/ui/divider';
+import KakaoLogin from '@/ui/kakao-login';
 import { PASSWORD_MIN_LENGTH } from '@/constants';
 
 export default function CreateAccount() {

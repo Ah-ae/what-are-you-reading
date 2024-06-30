@@ -1,4 +1,4 @@
-import NavLinks from '@/components/nav/nav-links';
+import NavLinks from '@/ui/nav/nav-links';
 
 export default function BottomNav() {
   return (
