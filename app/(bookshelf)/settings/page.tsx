@@ -1,21 +1,7 @@
 import Image from 'next/image';
-import { notFound, redirect } from 'next/navigation';
-import db from '@/lib/db';
+import { redirect } from 'next/navigation';
 import getSession from '@/lib/session';
-
-async function getUser() {
-  const session = await getSession();
-  if (session.id) {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
-    });
-    if (user) return user;
-  }
-
-  notFound();
-}
+import { getUser } from '@/lib/data';
 
 export default async function Settings() {
   const user = await getUser();

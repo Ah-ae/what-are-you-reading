@@ -12,6 +12,9 @@ const config: Config = {
       textColor: {
         primary: colors.gray[900],
       },
+      colors: {
+        'main-theme-color': colors.green[800],
+      },
     },
   },
   plugins: [],
