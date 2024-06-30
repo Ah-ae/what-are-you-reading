@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR, DISALLOWED_USERNAME_LIST } from '@/constants';
 import db from '@/lib/db';
-import { login } from '@/utils/login';
+import { login } from '@/utils/auth';
 
 const checkUserName = (username: string) => {
   for (const disallowedWord of DISALLOWED_USERNAME_LIST) {

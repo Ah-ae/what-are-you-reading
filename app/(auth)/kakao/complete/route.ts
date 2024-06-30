@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { redirect } from 'next/navigation';
 import db from '@/lib/db';
-import { login } from '@/utils/login';
+import { login } from '@/utils/auth';
 import { APP_BASE_URL } from '@/constants';
 
 async function getAccessToken(code: string): Promise<{
