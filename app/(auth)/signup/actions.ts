@@ -3,17 +3,12 @@
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
-import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR, DISALLOWED_USERNAME_LIST } from '@/constants';
 import db from '@/lib/db';
 import { login } from '@/utils/auth';
+import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR, DISALLOWED_USERNAME_LIST } from '@/constants';
 
-const checkUserName = (username: string) => {
-  for (const disallowedWord of DISALLOWED_USERNAME_LIST) {
-    if (username.toLowerCase().includes(disallowedWord)) {
-      return false;
-    }
-  }
-  return true;
+const checkUserName = (username: string): boolean => {
+  return !DISALLOWED_USERNAME_LIST.some((disallowedWord) => username.toLowerCase().includes(disallowedWord));
 };
 const checkPasswords = ({ password, confirm_password }: { password: string; confirm_password: string }) =>
   password === confirm_password;
