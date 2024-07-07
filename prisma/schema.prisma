@@ -59,9 +59,9 @@ model Author {
 // 중간 테이블
 model AuthorBook {
   id       Int    @id @default(autoincrement())
-  book     Book   @relation(fields: [bookId], references: [id])
+  book     Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId   Int
-  author   Author @relation(fields: [authorId], references: [id])
+  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
 
@@ -74,8 +74,8 @@ model Translator {
 // 중간 테이블
 model TranslatorBook {
   id           Int        @id @default(autoincrement())
-  book         Book       @relation(fields: [bookId], references: [id])
+  book         Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId       Int
-  Translator   Translator @relation(fields: [translatorId], references: [id])
+  Translator   Translator @relation(fields: [translatorId], references: [id], onDelete: Cascade)
   translatorId Int
 }
