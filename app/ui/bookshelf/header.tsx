@@ -43,7 +43,6 @@ function ActionButtons() {
   const currentMode = searchParams.get('mode') || 'view';
   const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
   const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
-  console.log('items', selectedItems);
 
   return (
     <div className="w-[28px] flex gap-3">
