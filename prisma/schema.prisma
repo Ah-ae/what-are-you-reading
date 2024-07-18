@@ -46,6 +46,8 @@ model Book {
   isbn        String
   rating      Int              @default(0)
   review      String? // 사용자가 남기는 한 줄 서평 
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
   Bookshelf   Bookshelf        @relation(fields: [bookshelfId], references: [id])
   bookshelfId Int
 }
@@ -76,6 +78,6 @@ model TranslatorBook {
   id           Int        @id @default(autoincrement())
   book         Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId       Int
-  Translator   Translator @relation(fields: [translatorId], references: [id], onDelete: Cascade)
+  translator   Translator @relation(fields: [translatorId], references: [id], onDelete: Cascade)
   translatorId Int
 }
