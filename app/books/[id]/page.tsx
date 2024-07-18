@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { StarIcon } from '@heroicons/react/24/outline';
+import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
 import { getImageSize } from '@/utils/image';
@@ -11,6 +13,21 @@ const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px]';
 const itemStyles = 'py-3 border-b-[1px] last:border-b-0';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
+
+const MAX_RATING = 5;
+const starIconStyles = 'size-5 text-sky-600';
+
+function StarRating(rating: number) {
+  const stars = Array.from({ length: MAX_RATING }, (_, index) => {
+    return index < rating ? (
+      <SolidStarIcon key={index} className={starIconStyles} />
+    ) : (
+      <StarIcon key={index} className={starIconStyles} />
+    );
+  });
+
+  return <>{stars}</>;
+}
 
 type Props = {
   params: { id: string };
@@ -93,7 +110,7 @@ export default async function BookDetail({ params }: Props) {
         </div>
 
         <div className={containerStyles}>
-          <p className={itemStyles}>별점: {rating}</p>
+          <p className={`flex ${itemStyles}`}>{StarRating(rating)}</p>
           {review && <p className={itemStyles}>한 줄 평: {review}</p>}
         </div>
 
