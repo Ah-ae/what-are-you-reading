@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
@@ -102,9 +103,11 @@ export default async function BookDetail({ params }: Props) {
 
         <div
           data-before="도서 정보는 Daum에서 제공합니다."
-          className={`${beforePseudoElementStyles} ${containerStyles}`}
+          className={`${beforePseudoElementStyles} ${containerStyles} hover:bg-zinc-200`}
         >
-          <p className={itemStyles}>다음 검색에서 보기</p>
+          <Link href={url} className="text-neutral-900">
+            <p className={itemStyles}>Daum 검색에서 보기</p>
+          </Link>
         </div>
       </section>
     </>
