@@ -76,6 +76,6 @@ model TranslatorBook {
   id           Int        @id @default(autoincrement())
   book         Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId       Int
-  Translator   Translator @relation(fields: [translatorId], references: [id], onDelete: Cascade)
+  translator   Translator @relation(fields: [translatorId], references: [id], onDelete: Cascade)
   translatorId Int
 }
