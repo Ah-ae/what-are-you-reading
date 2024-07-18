@@ -5,6 +5,7 @@ import { StarIcon } from '@heroicons/react/24/outline';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
+import EditableReview from '@/ui/book/editable-review';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
@@ -81,7 +82,7 @@ export default async function BookDetail({ params }: Props) {
     <>
       {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
-        <span>뒤로</span>
+        <button>뒤로</button>
         <button>편집</button>
       </HeaderLayout>
 
@@ -109,9 +110,10 @@ export default async function BookDetail({ params }: Props) {
           </div>
         </div>
 
+        {/* // TODO: rating과 review 사용자 입력값 DB에 업데이트 */}
         <div className={containerStyles}>
           <p className={`flex ${itemStyles}`}>{StarRating(rating)}</p>
-          {review && <p className={itemStyles}>한 줄 평: {review}</p>}
+          <div className={itemStyles}>{review ? `한 줄 평: ${review}` : <EditableReview />}</div>
         </div>
 
         <div data-before="등록일" className={`${beforePseudoElementStyles} ${containerStyles}`}>
@@ -126,6 +128,8 @@ export default async function BookDetail({ params }: Props) {
             <p className={itemStyles}>Daum 검색에서 보기</p>
           </Link>
         </div>
+
+        {/* // TODO: '책 삭제' text button 마크업 및 DB 연동 */}
       </section>
     </>
   );
