@@ -33,7 +33,7 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
   }
 
   return currentMode === 'view' ? (
-    <Link href={`/mine/${id}`} className="cursor-pointer">
+    <Link href={`/books/${id}`} className="cursor-pointer">
       <Image src={thumbnail} alt={title} className="shadow-lg" width={width} height={height} />
     </Link>
   ) : (
