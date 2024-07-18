@@ -4,6 +4,7 @@ import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
+import InvalidThumbnail from '@/ui/invalid-thumbnail';
 
 type Props = {
   params: { id: string };
@@ -68,9 +69,7 @@ export default async function BookDetail({ params }: Props) {
             {width && height ? (
               <Image src={thumbnail} alt={title} className="border shadow-xl" width={width} height={height} priority />
             ) : (
-              <span className="w-[120px] h-[174px] flex items-center text-center bg-gray-400">
-                Invalid thumbnail URL
-              </span>
+              <InvalidThumbnail />
             )}
             <div className="flex flex-col justify-end items-end *:text-neutral-500">
               <span>{formatKoreanDate(datetime)}</span>
