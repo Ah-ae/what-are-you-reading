@@ -51,7 +51,7 @@ export default async function BookDetail({ params }: Props) {
     `${authorNames.join(', ')} 지음`,
     translatorNames.length > 0 ? `${translatorNames.join(', ')} 옮김` : null,
     publisher,
-  ];
+  ].filter(Boolean); // null 또는 빈 문자열 등을 제거하여 필요한 요소만 포함
 
   return (
     <>
@@ -79,14 +79,11 @@ export default async function BookDetail({ params }: Props) {
             </div>
           </div>
           <div className="pl-4 flex flex-col gap-2 border-y-[1px]">
-            {basicInfoItems.map(
-              (item, index) =>
-                item && (
-                  <p key={index} className="py-3 border-b-[1px] last:border-b-0">
-                    {item}
-                  </p>
-                ),
-            )}
+            {basicInfoItems.map((item, index) => (
+              <p key={index} className="py-3 border-b-[1px] last:border-b-0">
+                {item}
+              </p>
+            ))}
           </div>
         </div>
 
