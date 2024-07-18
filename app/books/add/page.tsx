@@ -1,4 +1,5 @@
 import HeaderLayout from '@/layout/header';
+import Search from '@/ui/search';
 
 export default function AddBook() {
   return (
@@ -13,7 +14,9 @@ export default function AddBook() {
       </HeaderLayout>
 
       <section>
-        <div className="p-4"></div>
+        <div className="p-4">
+          <Search />
+        </div>
       </section>
     </>
   );
