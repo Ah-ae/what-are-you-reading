@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
+import HeaderLayout from '@/layout/header';
 import { DeleteBooks } from '@/ui/bookshelf/buttons';
 import { SELECTED_ITEMS_KEY } from '@/constants';
 
@@ -10,11 +11,11 @@ type Props = { title: string };
 
 export default function Header({ title }: Props) {
   return (
-    <header className="p-4 flex justify-between items-center bg-gray-50 dark:bg-zinc-700 border-b border-gray-200 dark:border-zinc-600">
+    <HeaderLayout>
       <ActionButtons />
       <h2 className="text-2xl font-medium dark:text-neutral-200">{title}</h2>
       <ToggleButtons />
-    </header>
+    </HeaderLayout>
   );
 }
 
