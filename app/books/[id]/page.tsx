@@ -6,6 +6,11 @@ import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 
+const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px]';
+const itemStyles = 'py-3 border-b-[1px] last:border-b-0';
+const beforePseudoElementStyles =
+  'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
+
 type Props = {
   params: { id: string };
 };
@@ -62,7 +67,7 @@ export default async function BookDetail({ params }: Props) {
         <button>편집</button>
       </HeaderLayout>
 
-      <section className="min-h-screen pb-10 flex flex-col gap-12 bg-zinc-100 *:bg-white">
+      <section className="min-h-screen flex flex-col gap-12 bg-zinc-100 *:bg-white">
         <div>
           <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
           <div className="px-6 py-2 flex justify-between">
@@ -77,32 +82,29 @@ export default async function BookDetail({ params }: Props) {
               <span>{isbn.split(' ')[1]}</span>
             </div>
           </div>
-          <div className="pl-4 flex flex-col gap-2 border-y-[1px]">
+          <div className={containerStyles}>
             {basicInfoItems.map((item, index) => (
-              <p key={index} className="py-3 border-b-[1px] last:border-b-0">
+              <p key={index} className={itemStyles}>
                 {item}
               </p>
             ))}
           </div>
         </div>
 
-        <div className="pl-4 flex flex-col gap-2 border-y-[1px]">
-          <p className="py-3 border-b-[1px] last:border-b-0">별점: {rating}</p>
-          {review && <p className="py-3 border-b-[1px] last:border-b-0">한 줄 평: {review}</p>}
+        <div className={containerStyles}>
+          <p className={itemStyles}>별점: {rating}</p>
+          {review && <p className={itemStyles}>한 줄 평: {review}</p>}
         </div>
 
-        <div
-          data-before="등록일"
-          className="before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500 pl-4 flex flex-col gap-2 border-y-[1px]"
-        >
-          <p className="py-3 border-b-[1px] last:border-b-0">{formatKoreanDate(created_at)}</p>
+        <div data-before="등록일" className={`${beforePseudoElementStyles} ${containerStyles}`}>
+          <p className={itemStyles}>{formatKoreanDate(created_at)}</p>
         </div>
 
         <div
           data-before="도서 정보는 Daum에서 제공합니다."
-          className="before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500 pl-4 flex flex-col gap-2 border-y-[1px]"
+          className={`${beforePseudoElementStyles} ${containerStyles}`}
         >
-          <p className="py-3 border-b-[1px] last:border-b-0">다음 검색에서 보기</p>
+          <p className={itemStyles}>다음 검색에서 보기</p>
         </div>
       </section>
     </>
