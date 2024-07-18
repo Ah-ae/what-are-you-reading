@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
 import { getImageSize } from '@/utils/image';
+import { formatKoreanDate } from '@/utils/date';
 
 type Props = {
   params: { id: string };
@@ -72,7 +73,7 @@ export default async function BookDetail({ params }: Props) {
               </span>
             )}
             <div className="flex flex-col justify-end items-end *:text-neutral-500">
-              <span>{datetime.toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span>{formatKoreanDate(datetime)}</span>
               <span>{price.toLocaleString('ko-KR')}원</span>
               <span>{isbn.split(' ')[1]}</span>
             </div>
@@ -98,9 +99,7 @@ export default async function BookDetail({ params }: Props) {
           data-before="등록일"
           className="before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500 pl-4 flex flex-col gap-2 border-y-[1px]"
         >
-          <p className="py-3 border-b-[1px] last:border-b-0">
-            {created_at.toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </p>
+          <p className="py-3 border-b-[1px] last:border-b-0">{formatKoreanDate(created_at)}</p>
         </div>
 
         <div
