@@ -10,13 +10,13 @@ import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 
-const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px]';
-const itemStyles = 'py-3 border-b-[1px] last:border-b-0';
+const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px] dark:border-neutral-700';
+const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutral-700';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
 
 const MAX_RATING = 5;
-const starIconStyles = 'size-5 text-sky-600';
+const starIconStyles = 'size-5 text-sky-600 dark:text-blue-500';
 
 function StarRating(rating: number) {
   const stars = Array.from({ length: MAX_RATING }, (_, index) => {
@@ -86,19 +86,28 @@ export default async function BookDetail({ params }: Props) {
         <button>편집</button>
       </HeaderLayout>
 
-      <section className="min-h-screen flex flex-col gap-12 bg-zinc-100 *:bg-white">
+      <section className="min-h-screen flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
         <div>
-          <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
-          <div className="px-6 py-2 flex justify-between">
-            {width && height ? (
-              <Image src={thumbnail} alt={title} className="border shadow-xl" width={width} height={height} priority />
-            ) : (
-              <InvalidThumbnail />
-            )}
-            <div className="flex flex-col justify-end items-end *:text-neutral-500">
-              <span>{formatKoreanDate(datetime)}</span>
-              <span>{price.toLocaleString('ko-KR')}원</span>
-              <span>{isbn.split(' ')[1]}</span>
+          <div className="dark:bg-zinc-900">
+            <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
+            <div className="px-6 py-2 flex justify-between">
+              {width && height ? (
+                <Image
+                  src={thumbnail}
+                  alt={title}
+                  className="border shadow-xl"
+                  width={width}
+                  height={height}
+                  priority
+                />
+              ) : (
+                <InvalidThumbnail />
+              )}
+              <div className="flex flex-col justify-end items-end *:text-neutral-500">
+                <span>{formatKoreanDate(datetime)}</span>
+                <span>{price.toLocaleString('ko-KR')}원</span>
+                <span>{isbn.split(' ')[1]}</span>
+              </div>
             </div>
           </div>
           <div className={containerStyles}>
@@ -122,9 +131,9 @@ export default async function BookDetail({ params }: Props) {
 
         <div
           data-before="도서 정보는 Daum에서 제공합니다."
-          className={`${beforePseudoElementStyles} ${containerStyles} hover:bg-zinc-200`}
+          className={`${beforePseudoElementStyles} ${containerStyles} hover:bg-zinc-200 dark:hover:bg-neutral-600`}
         >
-          <Link href={url} className="text-neutral-900">
+          <Link href={url} className="text-neutral-900 dark:text-gray-100">
             <p className={itemStyles}>Daum 검색에서 보기</p>
           </Link>
         </div>
