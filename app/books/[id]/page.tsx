@@ -41,12 +41,12 @@ async function getBook(id: number) {
     },
     include: {
       authors: {
-        include: {
+        select: {
           author: true,
         },
       },
       translators: {
-        include: {
+        select: {
           translator: true,
         },
       },
