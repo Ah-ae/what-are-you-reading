@@ -1,5 +1,12 @@
 import HeaderLayout from '@/layout/header';
 import Search from '@/ui/search';
+import Tab from '@/ui/tab';
+
+const tabs = [
+  { key: 'title', label: '제목' },
+  { key: 'person', label: '지은이' },
+  { key: 'publisher', label: '출판사' },
+];
 
 export default function AddBook() {
   return (
@@ -16,6 +23,7 @@ export default function AddBook() {
       <section>
         <div className="p-4">
           <Search />
+          <Tab tabs={tabs} />
         </div>
       </section>
     </>
