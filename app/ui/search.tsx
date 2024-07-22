@@ -1,6 +1,6 @@
 'use client';
 
-import type { InputHTMLAttributes } from 'react';
+import { Suspense, type InputHTMLAttributes } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
@@ -9,7 +9,7 @@ type Props = {
   width?: string;
 };
 
-export default function Search({ width, ...args }: Props & InputHTMLAttributes<HTMLInputElement>) {
+function Search({ width, ...args }: Props & InputHTMLAttributes<HTMLInputElement>) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -42,5 +42,13 @@ export default function Search({ width, ...args }: Props & InputHTMLAttributes<H
         {...args}
       />
     </div>
+  );
+}
+
+export default function SearchBar() {
+  return (
+    <Suspense>
+      <Search />
+    </Suspense>
   );
 }

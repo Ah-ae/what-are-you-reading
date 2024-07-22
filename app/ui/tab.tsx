@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface TabItem {
@@ -12,7 +12,7 @@ type Props = {
   tabs: TabItem[];
 };
 
-export default function Tab({ tabs }: Props) {
+function Tab({ tabs }: Props) {
   const [activeTab, setActiveTab] = useState(tabs[0].key);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -42,5 +42,13 @@ export default function Tab({ tabs }: Props) {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function TabBar({ tabs }: Props) {
+  return (
+    <Suspense>
+      <Tab tabs={tabs} />
+    </Suspense>
   );
 }
