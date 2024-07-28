@@ -13,9 +13,10 @@ type Props = {
 };
 
 function Tab({ tabs }: Props) {
-  const [activeTab, setActiveTab] = useState(tabs[0].key);
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const target = searchParams.get('target');
+  const [activeTab, setActiveTab] = useState(target ? target : tabs[0].key);
+  const pathname = usePathname();
   const { replace } = useRouter();
 
   const handleTabClick = (key: string) => {

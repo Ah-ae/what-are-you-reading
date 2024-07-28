@@ -1,6 +1,6 @@
 import HeaderLayout from '@/layout/header';
 import SearchForm from '@/ui/books/search-form';
-import Tab from '@/books/add/tab';
+import Tab from '@/ui/books/tab';
 
 const tabs = [
   { key: 'title', label: '제목' },
