@@ -15,7 +15,7 @@ export default function Home() {
         </Link>
         <div className="flex gap-2">
           <span>이미 계정이 있나요?</span>
-          <Link href="/login" className="hover:underline">
+          <Link href="/login" className="text-main-theme-color hover:underline">
             로그인
           </Link>
         </div>

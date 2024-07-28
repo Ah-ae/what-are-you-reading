@@ -13,7 +13,9 @@ export default function Header({ title }: Props) {
   return (
     <HeaderLayout>
       <ActionButtons />
-      <h2 className="text-2xl font-medium dark:text-neutral-200">{title}</h2>
+      <div>
+        <h2 className="text-xl font-medium dark:text-neutral-200">{title}</h2>
+      </div>
       <ToggleButtons />
     </HeaderLayout>
   );
@@ -48,14 +50,14 @@ function ActionButtons() {
   return (
     <div className="w-[28px] flex gap-3">
       {currentMode === 'view' ? (
-        <Link href={``}>
+        <Link href="/books/add">
           <PlusIcon className="size-6 font-bold" />
         </Link>
       ) : (
         <>
           <DeleteBooks ids={selectedItems} />
           <button>
-            <Bars3BottomLeftIcon className="size-6 font-bold text-main-theme-color" />
+            <Bars3BottomLeftIcon className="size-6 font-bold text-main-theme-color dark:text-blue-500" />
           </button>
         </>
       )}

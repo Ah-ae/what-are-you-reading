@@ -30,7 +30,7 @@ export function DeleteBooks({ ids }: { ids: number[] }) {
     <button onClick={handleDelete} disabled={disabled}>
       <TrashIcon
         className={clsx('size-6 font-bold', {
-          'text-main-theme-color': ids.length > 0,
+          'text-main-theme-color dark:text-blue-500': ids.length > 0,
           'text-neutral-400': disabled,
         })}
       />
