@@ -76,7 +76,10 @@ function BookCard({ title, thumbnail, publisher, authors, translators, datetime 
         <span className="font-semibold">{title}</span>
         <div className="flex flex-col *:text-neutral-500">
           <span>
-            {authors.join(', ')} 지음{translators.length > 0 && `, ${translators.join(', ')} 옮김`}
+            {/* Daum 도서 API 응답 결과 중 간혹 authors 배열이 빈 배열로 들어오는 값이 있음 */}
+            {authors.length > 0 && `${authors.join(', ')} 지음`}
+            {authors.length > 0 && translators.length > 0 && ', '}
+            {translators.length > 0 && `${translators.join(', ')} 옮김`}
           </span>
           <span>{publisher}</span>
           <span className="">{formatKoreanDate(datetime)}</span>
