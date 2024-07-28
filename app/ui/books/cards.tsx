@@ -68,7 +68,7 @@ export default function BookList({ initialBooks, query, target }: Props) {
 
 function BookCard({ title, thumbnail, publisher, authors, translators, datetime }: KaKaoBookResponse) {
   return (
-    <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200">
+    <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700">
       <div className="relative w-20 shadow-lg">
         <Image src={thumbnail} alt={title} fill className="object-top" />
       </div>
