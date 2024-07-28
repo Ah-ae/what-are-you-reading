@@ -1,5 +1,5 @@
 import HeaderLayout from '@/layout/header';
-import FindBooks from '@/books/add/find-books';
+import SearchForm from '@/ui/books/search-form';
 import Tab from '@/books/add/tab';
 
 const tabs = [
@@ -17,7 +17,7 @@ export default function AddBook({
   };
 }) {
   const query = searchParams?.query || '';
-  const target = searchParams?.query || '';
+  const target = searchParams?.target || '';
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function AddBook({
 
       <section>
         <div className="p-4">
-          <FindBooks query={query} target={target} />
+          <SearchForm query={query} target={target} />
           <Tab tabs={tabs} />
         </div>
       </section>
