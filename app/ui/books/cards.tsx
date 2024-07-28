@@ -1,23 +1,76 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import { formatKoreanDate } from '@/utils/date';
-import { getImageSize } from '@/utils/image';
-import type { KaKaoBookResponse } from '@/books/add/list/page';
+import { getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 
-type Props = { book: KaKaoBookResponse };
+type Props = {
+  initialBooks: KaKaoBookResponse[];
+  query: string;
+  target: string;
+};
 
-export default async function BookCard({ book }: Props) {
-  const { title, thumbnail, publisher, authors, translators, datetime } = book;
-  const { width, height } = getImageSize(thumbnail);
+export default function BookList({ initialBooks, query, target }: Props) {
+  const [books, setBooks] = useState(initialBooks);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const trigger = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+        const element = entries[0];
+        if (element.isIntersecting && trigger.current) {
+          observer.unobserve(trigger.current);
+          setIsLoading(true);
+          const newData = await getMoreBooks(page + 1, query, target);
+          const isEnd = newData.meta.is_end;
+
+          if (isEnd) {
+            setIsLastPage(true);
+          } else {
+            setPage((prev) => prev + 1);
+            setBooks((prev) => [...prev, ...newData.documents]);
+          }
+
+          setIsLoading(false);
+        }
+      },
+    );
+
+    if (trigger.current !== null) {
+      observer.observe(trigger.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [page, query, target]);
 
   return (
+    <ul className="py-5 flex flex-col gap-3">
+      {books.map((book) => (
+        <BookCard key={book.isbn + book.title} {...book} />
+      ))}
+      {!isLastPage && (
+        <span
+          ref={trigger}
+          className="w-fit mx-auto px-3 py-2 text-sm font-semibold bg-main-theme-color dark:bg-blue-500 text-white rounded-md hover:opacity-90 active:scale-95"
+        >
+          {isLoading ? '로딩 중...' : '더 보기'}
+        </span>
+      )}
+    </ul>
+  );
+}
+
+function BookCard({ title, thumbnail, publisher, authors, translators, datetime }: KaKaoBookResponse) {
+  return (
     <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200">
-      <div className="relative">
-        {width && height ? (
-          <Image src={thumbnail} alt={title} width={width * 0.6} height={height * 0.6} />
-        ) : (
-          <InvalidThumbnail />
-        )}
+      <div className="relative w-20 shadow-lg">
+        <Image src={thumbnail} alt={title} fill className="object-top" />
       </div>
       <div className="flex flex-col justify-between gap-2 *:rounded-md">
         <span className="font-semibold">{title}</span>
