@@ -20,12 +20,16 @@ export interface KaKaoBookResponse {
   url: string;
 }
 
-export async function searchBooks(query: string, target: string, page?: number): Promise<KaKaoBookApiResponse> {
+export async function searchBooks(
+  query: string,
+  target: string = 'title',
+  page: number = 1,
+): Promise<KaKaoBookApiResponse> {
   const baseURL = 'https://dapi.kakao.com/v3/search/book';
   const params = {
     query,
     target,
-    page: page ? page.toString() : '1',
+    page: page.toString(),
   };
   const formattedParams = new URLSearchParams(params).toString();
   const finalURL = `${baseURL}?${formattedParams}`;
