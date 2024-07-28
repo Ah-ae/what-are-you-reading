@@ -1,6 +1,6 @@
 import HeaderLayout from '@/layout/header';
-import Search from '@/ui/search';
-import Tab from '@/ui/tab';
+import FindBooks from '@/books/add/find-books';
+import Tab from '@/books/add/tab';
 
 const tabs = [
   { key: 'title', label: '제목' },
@@ -8,7 +8,17 @@ const tabs = [
   { key: 'publisher', label: '출판사' },
 ];
 
-export default function AddBook() {
+export default function AddBook({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    target?: string;
+  };
+}) {
+  const query = searchParams?.query || '';
+  const target = searchParams?.query || '';
+
   return (
     <>
       {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
@@ -22,7 +32,7 @@ export default function AddBook() {
 
       <section>
         <div className="p-4">
-          <Search />
+          <FindBooks query={query} target={target} />
           <Tab tabs={tabs} />
         </div>
       </section>
