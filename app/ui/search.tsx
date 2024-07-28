@@ -2,7 +2,6 @@
 
 import { Suspense, type InputHTMLAttributes } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 type Props = {
@@ -14,7 +13,7 @@ function Search({ wrapperClassName = '', ...args }: Props & InputHTMLAttributes<
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term: string) => {
+  const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('query', term);
@@ -22,7 +21,7 @@ function Search({ wrapperClassName = '', ...args }: Props & InputHTMLAttributes<
       params.delete('query');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  };
 
   return (
     <div className={`relative w-full ${wrapperClassName}`}>
