@@ -51,7 +51,7 @@ function ActionButtons() {
     <div className="w-[28px] flex gap-3">
       {currentMode === 'view' ? (
         <Link href="/books/add">
-          <PlusIcon className="size-6 font-bold" />
+          <PlusIcon className="size-6 font-bold text-main-theme-color dark:text-blue-500" />
         </Link>
       ) : (
         <>
