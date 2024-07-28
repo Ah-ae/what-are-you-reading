@@ -30,11 +30,9 @@ export default function AddBook({
         <button>목록 삭제</button>
       </HeaderLayout>
 
-      <section>
-        <div className="p-4">
-          <SearchForm query={query} target={target} />
-          <Tab tabs={tabs} />
-        </div>
+      <section className="p-4">
+        <SearchForm query={query} target={target} />
+        <Tab tabs={tabs} />
       </section>
     </>
   );
