@@ -72,7 +72,7 @@ function BookCard({ title, thumbnail, publisher, authors, translators, datetime 
       <div className="relative w-20 shadow-lg">
         <Image src={thumbnail} alt={title} fill className="object-top" />
       </div>
-      <div className="flex flex-col justify-between gap-2 *:rounded-md">
+      <div className="w-96 flex flex-col justify-between gap-2 *:rounded-md">
         <span className="font-semibold">{title}</span>
         <div className="flex flex-col *:text-neutral-500">
           <span>
