@@ -19,11 +19,8 @@ export default function BookList({ initialBooks, query, target }: Props) {
   const [isLastPage, setIsLastPage] = useState(false);
   const trigger = useRef<HTMLSpanElement>(null);
 
-  const handleAddBook = (
-    bookToAdd: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'> & { isOwned?: boolean },
-  ) => {
+  const handleAddBook = (bookToAdd: Pick<KaKaoBookResponse, 'isbn'> & { isOwned?: boolean }) => {
     setBooks((prev) => prev.map((book) => (book.isbn === bookToAdd.isbn ? { ...book, isOwned: true } : book)));
-    addBook(bookToAdd);
   };
 
   useEffect(() => {
@@ -88,13 +85,18 @@ function BookCard({
   onAdd,
 }: KaKaoBookResponse & {
   isOwned?: boolean;
-  onAdd: (bookToAdd: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'> & { isOwned?: boolean }) => void;
+  onAdd: (bookToAdd: Pick<KaKaoBookResponse, 'isbn'> & { isOwned?: boolean }) => void;
 }) {
   return (
     <li
       onClick={() => {
         if (isOwned) return;
-        onAdd({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn });
+
+        // Note: onAdd prop으로 전달하는 함수에서 서버 업데이트 함수인 addBook까지 같이 전달하는 경우, 내 책장(/mine)으로 되돌아갔을 때 새로고침을 하지 않으면 최신 데이터가 반영되지 않는 이슈 있음
+        // 클라이언트 업데이트
+        onAdd({ isbn });
+        // 서버 업데이트
+        addBook({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn });
       }}
       className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
     >
@@ -114,11 +116,9 @@ function BookCard({
           <span className="">{formatKoreanDate(datetime)}</span>
         </div>
       </div>
-      {isOwned && (
-        <div className="flex items-center">
-          <CheckIcon className="size-8 text-main-theme-color dark:text-blue-500" />
-        </div>
-      )}
+      <div className={`flex items-center ${isOwned ? 'block' : 'invisible'}`}>
+        <CheckIcon className="size-8 text-main-theme-color dark:text-blue-500" />
+      </div>
     </li>
   );
 }
