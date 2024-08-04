@@ -89,59 +89,61 @@ export const checkOwnedBooks = async (bookList: KaKaoBookResponse[], userId: num
 
 export const addBook = async (book: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'>) => {
   const session = await getSession();
-  if (session.id) {
-    const createdBook = await db.book.create({
-      data: {
-        title: book.title,
-        datetime: book.datetime,
-        price: book.price,
-        publisher: book.publisher,
-        thumbnail: book.thumbnail,
-        url: book.url,
-        isbn: book.isbn,
-        Bookshelf: {
-          connect: {
-            ownerId: session.id,
-          },
+  if (!session.id) return;
+
+  const createdBook = await db.book.create({
+    data: {
+      title: book.title,
+      datetime: book.datetime,
+      price: book.price,
+      publisher: book.publisher,
+      thumbnail: book.thumbnail,
+      url: book.url,
+      isbn: book.isbn,
+      Bookshelf: {
+        connect: {
+          ownerId: session.id,
         },
       },
-      select: {
-        id: true,
-      },
-    });
+    },
+    select: {
+      id: true,
+    },
+  });
 
-    //* Handle authors
-    const authors = await db.author.findMany({
-      where: {
-        name: { in: book.authors },
-      },
-    });
+  //* Handle authors
+  const authors = await db.author.findMany({
+    where: {
+      name: { in: book.authors },
+    },
+  });
 
-    const authorMap = new Map(authors.map((author) => [author.name, author.id]));
+  const authorMap = new Map(authors.map((author) => [author.name, author.id]));
 
-    const authorPromises = book.authors.map(async (authorName) => {
-      const authorId = authorMap.get(authorName);
-      if (!authorId) {
-        // Create a new author if not found
-        const newAuthor = await db.author.create({
-          data: { name: authorName },
-        });
-        authorMap.set(authorName, newAuthor.id);
-      }
-
-      // Connect the book with the author
-      await db.authorBook.create({
-        data: {
-          bookId: createdBook.id,
-          authorId: authorMap.get(authorName)!, // ! to assert that authorId exists
-        },
+  const authorPromises = book.authors.map(async (authorName) => {
+    const authorId = authorMap.get(authorName);
+    if (!authorId) {
+      // Create a new author if not found
+      const newAuthor = await db.author.create({
+        data: { name: authorName },
       });
+      authorMap.set(authorName, newAuthor.id);
+    }
+
+    // Connect the book with the author
+    await db.authorBook.create({
+      data: {
+        bookId: createdBook.id,
+        authorId: authorMap.get(authorName)!, // ! to assert that authorId exists
+      },
     });
+  });
 
-    // Wait for all promises to resolve
-    await Promise.all(authorPromises);
+  // Wait for all promises to resolve
+  await Promise.all(authorPromises);
 
-    //* Handle translators
+  //* Handle translators
+  if (book.translators.length > 0) {
     const translators = await db.translator.findMany({
       where: {
         name: { in: book.translators },
