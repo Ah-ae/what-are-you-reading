@@ -12,17 +12,19 @@ type Props = {
   target: string;
 };
 
-// TODO
-// 1. book card를 클릭으로 선택하면 체크 표시
-// 2. DB 내 책장에 저장
-// 3. BookList를 렌더링할 때 내 책장에 있는 책은 체크 표시
-
 export default function BookList({ initialBooks, query, target }: Props) {
   const [books, setBooks] = useState(initialBooks);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
   const trigger = useRef<HTMLSpanElement>(null);
+
+  const handleAddBook = (
+    bookToAdd: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'> & { isOwned?: boolean },
+  ) => {
+    setBooks((prev) => prev.map((book) => (book.isbn === bookToAdd.isbn ? { ...book, isOwned: true } : book)));
+    addBook(bookToAdd);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,7 +60,7 @@ export default function BookList({ initialBooks, query, target }: Props) {
   return (
     <ul className="py-5 flex flex-col gap-3">
       {books.map((book) => (
-        <BookCard key={book.isbn + book.title} {...book} />
+        <BookCard key={book.isbn + book.title} onAdd={handleAddBook} {...book} />
       ))}
       {!isLastPage && (
         <span
@@ -83,12 +85,16 @@ function BookCard({
   url,
   isbn,
   isOwned,
-}: KaKaoBookResponse & { isOwned?: boolean }) {
+  onAdd,
+}: KaKaoBookResponse & {
+  isOwned?: boolean;
+  onAdd: (bookToAdd: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'> & { isOwned?: boolean }) => void;
+}) {
   return (
     <li
       onClick={() => {
         if (isOwned) return;
-        addBook({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn });
+        onAdd({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn });
       }}
       className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
     >
