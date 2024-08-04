@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { formatKoreanDate } from '@/utils/date';
-import { getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
+import { addBook, getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 
 type Props = {
   initialBooks: (KaKaoBookResponse & { isOwned?: boolean })[];
@@ -79,10 +79,19 @@ function BookCard({
   authors,
   translators,
   datetime,
+  price,
+  url,
+  isbn,
   isOwned,
 }: KaKaoBookResponse & { isOwned?: boolean }) {
   return (
-    <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700">
+    <li
+      onClick={() => {
+        if (isOwned) return;
+        addBook({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn });
+      }}
+      className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+    >
       <div className="relative w-20 shadow-lg">
         <Image src={thumbnail} alt={title} fill className="object-top" />
       </div>
