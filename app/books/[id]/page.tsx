@@ -5,7 +5,7 @@ import { StarIcon } from '@heroicons/react/24/outline';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
-import EditableReview from '@/ui/book/editable-review';
+import EditableReview from '@/ui/books/editable-review';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
