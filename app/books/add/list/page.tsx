@@ -1,6 +1,6 @@
 import HeaderLayout from '@/layout/header';
 import BookList from '@/ui/books/cards';
-import { searchBooks } from '@/books/add/list/actions';
+import { searchBooks, checkOwnedBooks } from '@/books/add/list/actions';
 
 export default async function List({
   searchParams,
@@ -12,7 +12,8 @@ export default async function List({
 }) {
   const query = searchParams?.query || '';
   const target = searchParams?.target || '';
-  const bookList = await searchBooks(query, target);
+  const rawBookList = await searchBooks(query, target);
+  const ownedBookList = await checkOwnedBooks(rawBookList.documents, 2);
 
   return (
     <>
@@ -23,8 +24,8 @@ export default async function List({
 
       <section className="p-4">
         <p className="text-center">책을 선택하면 현재 책장에 바로 배치됩니다.</p>
-        {bookList.documents.length > 0 ? (
-          <BookList initialBooks={bookList.documents} query={query} target={target} />
+        {ownedBookList.length > 0 ? (
+          <BookList initialBooks={ownedBookList} query={query} target={target} />
         ) : (
           'Loading...'
         )}

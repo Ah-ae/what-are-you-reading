@@ -1,5 +1,7 @@
 'use server';
 
+import db from '@/lib/db';
+
 interface KaKaoBookApiResponse {
   documents: KaKaoBookResponse[];
   meta: { is_end: boolean; pageable_count: number; total_count: number };
@@ -45,6 +47,34 @@ export async function searchBooks(
 }
 
 export async function getMoreBooks(page: number, query: string, target: string) {
-  const data = await searchBooks(query, target, page);
-  return data;
+  const initialData = await searchBooks(query, target, page);
+  const ownedBooks = await checkOwnedBooks(initialData.documents, 2);
+
+  return {
+    documents: ownedBooks,
+    meta: initialData.meta,
+  };
 }
+
+export const checkOwnedBooks = async (bookList: KaKaoBookResponse[], userId: number) => {
+  const isbnList = bookList.map((book) => book.isbn);
+
+  const ownedBooks = await db.book.findMany({
+    where: {
+      isbn: { in: isbnList },
+      Bookshelf: {
+        ownerId: userId,
+      },
+    },
+    select: { isbn: true },
+  });
+
+  const ownedIsbnSet = new Set(ownedBooks.map((book) => book.isbn));
+
+  const ownedBookList = bookList.map((book) => ({
+    ...book,
+    isOwned: ownedIsbnSet.has(book.isbn),
+  }));
+
+  return ownedBookList;
+};

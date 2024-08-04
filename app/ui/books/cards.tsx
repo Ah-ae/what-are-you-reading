@@ -2,14 +2,20 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { CheckIcon } from '@heroicons/react/24/outline';
 import { formatKoreanDate } from '@/utils/date';
 import { getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 
 type Props = {
-  initialBooks: KaKaoBookResponse[];
+  initialBooks: (KaKaoBookResponse & { isOwned: boolean })[];
   query: string;
   target: string;
 };
+
+// TODO
+// 1. book card를 클릭으로 선택하면 체크 표시
+// 2. DB 내 책장에 저장
+// 3. BookList를 렌더링할 때 내 책장에 있는 책은 체크 표시
 
 export default function BookList({ initialBooks, query, target }: Props) {
   const [books, setBooks] = useState(initialBooks);
@@ -66,7 +72,15 @@ export default function BookList({ initialBooks, query, target }: Props) {
   );
 }
 
-function BookCard({ title, thumbnail, publisher, authors, translators, datetime }: KaKaoBookResponse) {
+function BookCard({
+  title,
+  thumbnail,
+  publisher,
+  authors,
+  translators,
+  datetime,
+  isOwned,
+}: KaKaoBookResponse & { isOwned: boolean }) {
   return (
     <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700">
       <div className="relative w-20 shadow-lg">
@@ -85,6 +99,11 @@ function BookCard({ title, thumbnail, publisher, authors, translators, datetime 
           <span className="">{formatKoreanDate(datetime)}</span>
         </div>
       </div>
+      {isOwned && (
+        <div className="flex items-center">
+          <CheckIcon className="size-8 text-main-theme-color dark:text-blue-500" />
+        </div>
+      )}
     </li>
   );
 }
