@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { CheckIcon } from '@heroicons/react/24/outline';
 import { formatKoreanDate } from '@/utils/date';
-import { getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
+import { createBook, getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 
 type Props = {
-  initialBooks: KaKaoBookResponse[];
+  initialBooks: (KaKaoBookResponse & { isOwned?: boolean })[];
   query: string;
   target: string;
 };
@@ -17,6 +18,10 @@ export default function BookList({ initialBooks, query, target }: Props) {
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false);
   const trigger = useRef<HTMLSpanElement>(null);
+
+  const handleAddBook = (bookToAdd: Pick<KaKaoBookResponse, 'isbn'> & { isOwned?: boolean }) => {
+    setBooks((prev) => prev.map((book) => (book.isbn === bookToAdd.isbn ? { ...book, isOwned: true } : book)));
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,7 +57,7 @@ export default function BookList({ initialBooks, query, target }: Props) {
   return (
     <ul className="py-5 flex flex-col gap-3">
       {books.map((book) => (
-        <BookCard key={book.isbn + book.title} {...book} />
+        <BookCard key={book.isbn + book.title} onAdd={handleAddBook} {...book} />
       ))}
       {!isLastPage && (
         <span
@@ -66,9 +71,34 @@ export default function BookList({ initialBooks, query, target }: Props) {
   );
 }
 
-function BookCard({ title, thumbnail, publisher, authors, translators, datetime }: KaKaoBookResponse) {
+function BookCard({
+  title,
+  thumbnail,
+  publisher,
+  authors,
+  translators,
+  datetime,
+  price,
+  url,
+  isbn,
+  isOwned,
+  onAdd,
+}: KaKaoBookResponse & {
+  isOwned?: boolean;
+  onAdd: (bookToAdd: Pick<KaKaoBookResponse, 'isbn'> & { isOwned?: boolean }) => void;
+}) {
+  const addBook = () => {
+    if (isOwned) return;
+
+    onAdd({ isbn }); // 클라이언트 업데이트
+    createBook({ title, datetime, authors, translators, price, publisher, thumbnail, url, isbn }); // 서버 업데이트
+  };
+
   return (
-    <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700">
+    <li
+      onClick={addBook}
+      className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+    >
       <div className="relative w-20 shadow-lg">
         <Image src={thumbnail} alt={title} fill className="object-top" />
       </div>
@@ -84,6 +114,9 @@ function BookCard({ title, thumbnail, publisher, authors, translators, datetime 
           <span>{publisher}</span>
           <span className="">{formatKoreanDate(datetime)}</span>
         </div>
+      </div>
+      <div className={`flex items-center ${isOwned ? 'block' : 'invisible'}`}>
+        <CheckIcon className="size-8 text-main-theme-color dark:text-blue-500" />
       </div>
     </li>
   );
