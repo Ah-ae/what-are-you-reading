@@ -2,6 +2,7 @@
 
 import db from '@/lib/db';
 import getSession from '@/lib/session';
+import { revalidatePath } from 'next/cache';
 
 interface KaKaoBookApiResponse {
   documents: KaKaoBookResponse[];
@@ -87,7 +88,7 @@ export const checkOwnedBooks = async (bookList: KaKaoBookResponse[], userId: num
   return ownedBookList;
 };
 
-export const addBook = async (book: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'>) => {
+export const createBook = async (book: Omit<KaKaoBookResponse, 'contents' | 'sale_price' | 'status'>) => {
   const session = await getSession();
   if (!session.id) return;
 
@@ -174,4 +175,6 @@ export const addBook = async (book: Omit<KaKaoBookResponse, 'contents' | 'sale_p
     // Wait for all promises to resolve
     await Promise.all(translatorPromises);
   }
+
+  revalidatePath('/mine');
 };
