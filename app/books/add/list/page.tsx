@@ -1,6 +1,7 @@
 import HeaderLayout from '@/layout/header';
 import BookList from '@/ui/books/cards';
 import { searchBooks, checkOwnedBooks } from '@/books/add/list/actions';
+import getSession from '@/lib/session';
 
 export default async function List({
   searchParams,
@@ -13,7 +14,14 @@ export default async function List({
   const query = searchParams?.query || '';
   const target = searchParams?.target || '';
   const rawBookList = await searchBooks(query, target);
-  const ownedBookList = await checkOwnedBooks(rawBookList.documents, 2);
+  const session = await getSession();
+
+  if (!session || !session.id) {
+    // If session is not available, return null
+    return null;
+  }
+
+  const ownedBookList = await checkOwnedBooks(rawBookList.documents, session.id);
 
   return (
     <>

@@ -7,7 +7,7 @@ import { formatKoreanDate } from '@/utils/date';
 import { getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 
 type Props = {
-  initialBooks: (KaKaoBookResponse & { isOwned: boolean })[];
+  initialBooks: (KaKaoBookResponse & { isOwned?: boolean })[];
   query: string;
   target: string;
 };
@@ -80,7 +80,7 @@ function BookCard({
   translators,
   datetime,
   isOwned,
-}: KaKaoBookResponse & { isOwned: boolean }) {
+}: KaKaoBookResponse & { isOwned?: boolean }) {
   return (
     <li className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700">
       <div className="relative w-20 shadow-lg">

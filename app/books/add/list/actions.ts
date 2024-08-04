@@ -1,6 +1,7 @@
 'use server';
 
 import db from '@/lib/db';
+import getSession from '@/lib/session';
 
 interface KaKaoBookApiResponse {
   documents: KaKaoBookResponse[];
@@ -48,7 +49,14 @@ export async function searchBooks(
 
 export async function getMoreBooks(page: number, query: string, target: string) {
   const initialData = await searchBooks(query, target, page);
-  const ownedBooks = await checkOwnedBooks(initialData.documents, 2);
+  const session = await getSession();
+
+  if (!session || !session.id) {
+    // If session is not available, return initial data
+    return initialData;
+  }
+
+  const ownedBooks = await checkOwnedBooks(initialData.documents, session.id);
 
   return {
     documents: ownedBooks,
