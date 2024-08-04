@@ -22,15 +22,13 @@ export default async function Mine() {
   return (
     <>
       <Header title="내 책장" />
-      <section>
-        <div className="flex justify-center pt-10 px-6">
-          <div className="grid grid-cols-3 gap-10">
-            {books.map((book) => (
-              <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
-            ))}
-          </div>
+      <div className="flex justify-center py-10 px-6">
+        <div className="grid grid-cols-3 gap-10">
+          {books.map((book) => (
+            <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
+          ))}
         </div>
-      </section>
+      </div>
     </>
   );
 }
