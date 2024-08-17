@@ -9,7 +9,7 @@ import StarRating from '@/ui/books/star-rating';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 
-const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px] dark:border-neutral-700';
+const containerStyles = 'px-4 flex flex-col gap-2 border-y-[1px] dark:border-neutral-700';
 const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutral-700';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
@@ -108,7 +108,9 @@ export default async function BookDetail({ params }: Props) {
           <p className={`flex ${itemStyles}`}>
             <StarRating rating={rating} bookId={id} />
           </p>
-          <div className={itemStyles}>{review ? `한 줄 평: ${review}` : <EditableReview />}</div>
+          <div className={itemStyles}>
+            <EditableReview review={review} bookId={id} />
+          </div>
         </div>
 
         <div data-before="등록일" className={`${beforePseudoElementStyles} ${containerStyles}`}>
