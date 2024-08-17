@@ -3,6 +3,10 @@
 import { useState, useTransition } from 'react';
 import { updateReview } from '@/books/[id]/actions';
 
+const wrapperStyles = 'group flex justify-between items-center gap-3';
+const textButtonStyles =
+  'w-[44px] px-1 py-px bg-slate-50 rounded-md border border-slate-400 text-sm dark:text-neutral-700';
+
 type Props = {
   review: string | null;
   bookId: number;
@@ -37,7 +41,7 @@ function EditableReview({ review: initialReview, bookId }: Props) {
   return (
     <>
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="flex justify-between items-center gap-3">
+        <form onSubmit={handleSubmit} className={wrapperStyles}>
           <input
             type="text"
             name="review"
@@ -45,14 +49,25 @@ function EditableReview({ review: initialReview, bookId }: Props) {
             onChange={handleChange}
             autoFocus
             placeholder="한 줄 평을 작성해 보세요."
-            className="w-[96%] text-zinc-600 focus:outline-none"
+            className="w-[96%] text-zinc-600 dark:text-zinc-100 dark:bg-zinc-800 focus:outline-none"
           />
-          <button className="w-12 px-2 py-px bg-slate-50 rounded-md border border-slate-400">저장</button>
+          <button className={textButtonStyles}>저장</button>
         </form>
       ) : (
-        <span onClick={handleClick}>
-          {review ? review : <span className="text-zinc-400">한 줄 평을 작성해 보세요.</span>}
-        </span>
+        <div className={wrapperStyles}>
+          {review ? (
+            <>
+              <span>{review}</span>
+              <button className={`${textButtonStyles} group-hover:block hidden`} onClick={handleClick}>
+                편집
+              </button>
+            </>
+          ) : (
+            <span className="text-zinc-400" onClick={handleClick}>
+              한 줄 평을 작성해 보세요.
+            </span>
+          )}
+        </div>
       )}
     </>
   );

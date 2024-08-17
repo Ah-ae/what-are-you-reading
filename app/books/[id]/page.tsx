@@ -67,7 +67,6 @@ export default async function BookDetail({ params }: Props) {
       {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
         <button>뒤로</button>
-        <button>편집</button>
       </HeaderLayout>
 
       <section className="min-h-screen flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
@@ -103,11 +102,13 @@ export default async function BookDetail({ params }: Props) {
           </div>
         </div>
 
-        {/* // TODO: rating과 review 사용자 입력값 DB에 업데이트 */}
         <div className={containerStyles}>
           <p className={`flex ${itemStyles}`}>
             <StarRating rating={rating} bookId={id} />
           </p>
+        </div>
+
+        <div data-before="한 줄 평" className={`${beforePseudoElementStyles} ${containerStyles}`}>
           <div className={itemStyles}>
             <EditableReview review={review} bookId={id} />
           </div>
