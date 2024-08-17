@@ -1,34 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { StarIcon } from '@heroicons/react/24/outline';
-import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
 import EditableReview from '@/ui/books/editable-review';
+import InvalidThumbnail from '@/ui/invalid-thumbnail';
+import StarRating from '@/ui/books/star-rating';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
-import InvalidThumbnail from '@/ui/invalid-thumbnail';
 
 const containerStyles = 'pl-4 flex flex-col gap-2 border-y-[1px] dark:border-neutral-700';
 const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutral-700';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
-
-const MAX_RATING = 5;
-const starIconStyles = 'size-5 text-sky-600 dark:text-blue-500';
-
-function StarRating(rating: number) {
-  const stars = Array.from({ length: MAX_RATING }, (_, index) => {
-    return index < rating ? (
-      <SolidStarIcon key={index} className={starIconStyles} />
-    ) : (
-      <StarIcon key={index} className={starIconStyles} />
-    );
-  });
-
-  return <>{stars}</>;
-}
 
 type Props = {
   params: { id: string };
@@ -121,7 +105,9 @@ export default async function BookDetail({ params }: Props) {
 
         {/* // TODO: rating과 review 사용자 입력값 DB에 업데이트 */}
         <div className={containerStyles}>
-          <p className={`flex ${itemStyles}`}>{StarRating(rating)}</p>
+          <p className={`flex ${itemStyles}`}>
+            <StarRating rating={rating} bookId={id} />
+          </p>
           <div className={itemStyles}>{review ? `한 줄 평: ${review}` : <EditableReview />}</div>
         </div>
 
