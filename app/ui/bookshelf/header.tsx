@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useAtom, useAtomValue } from 'jotai';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import HeaderLayout from '@/layout/header';
 import { DeleteBooks } from '@/ui/bookshelf/buttons';
 import { SELECTED_ITEMS_KEY } from '@/constants';
+import { currentModeAtom } from '@/store/atoms';
 
 type Props = { title: string };
 
@@ -22,20 +24,14 @@ export default function Header({ title }: Props) {
 }
 
 function ToggleButtons() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const currentMode = searchParams.get('mode') || 'view';
+  const [currentMode, setCurrentMode] = useAtom(currentModeAtom);
 
-  const handleClick = () => {
-    const newMode = currentMode === 'view' ? 'edit' : 'view';
-    const params = new URLSearchParams(searchParams);
-    params.set('mode', newMode);
-    replace(`${pathname}?${params}`);
+  const toggleCurrentMode = () => {
+    setCurrentMode((prev) => (prev === 'view' ? 'edit' : 'view'));
   };
 
   return (
-    <button onClick={handleClick} className="text-lg font-medium text-main-theme-color">
+    <button onClick={toggleCurrentMode} className="text-lg font-medium text-main-theme-color">
       {currentMode === 'view' ? '편집' : '완료'}
     </button>
   );
@@ -43,7 +39,7 @@ function ToggleButtons() {
 
 function ActionButtons() {
   const searchParams = useSearchParams();
-  const currentMode = searchParams.get('mode') || 'view';
+  const currentMode = useAtomValue(currentModeAtom);
   const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
   const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
 

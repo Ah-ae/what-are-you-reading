@@ -2,16 +2,19 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAtomValue } from 'jotai';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import InvalidThumbnail from '@/ui//invalid-thumbnail';
 import { useBookThumbnail } from '@/utils/hooks/useBookThumbnail';
 import { getImageSize } from '@/utils/image';
+import { currentModeAtom } from '@/store/atoms';
 
 type Props = { id: number; thumbnail: string; title: string };
 
 export default function BookThumbnail({ id, thumbnail, title }: Props) {
   const { width, height } = getImageSize(thumbnail);
-  const { isSelected, handleClick, currentMode } = useBookThumbnail(id, thumbnail);
+  const { isSelected, handleClick } = useBookThumbnail(id, thumbnail);
+  const currentMode = useAtomValue(currentModeAtom);
 
   if (!width || !height) {
     return <InvalidThumbnail />;
