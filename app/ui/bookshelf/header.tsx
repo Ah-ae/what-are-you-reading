@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import HeaderLayout from '@/layout/header';
 import { DeleteBooks } from '@/ui/bookshelf/buttons';
@@ -23,14 +24,14 @@ export default function Header({ title }: Props) {
 
 function ToggleButtons() {
   const [currentMode, setCurrentMode] = useAtom(currentModeAtom);
-  const setSelectedItems = useSetAtom(selectedItemsAtom);
+  const resetSelectedItems = useResetAtom(selectedItemsAtom);
 
   const handleClick = () => {
     // toggle current mode
     setCurrentMode((prev) => (prev === 'view' ? 'edit' : 'view'));
 
     // '완료' 클릭시, selectedItems 초기화
-    if (currentMode === 'edit') setSelectedItems([]);
+    if (currentMode === 'edit') resetSelectedItems();
   };
 
   return (
