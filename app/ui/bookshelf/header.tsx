@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import HeaderLayout from '@/layout/header';
 import { DeleteBooks } from '@/ui/bookshelf/buttons';
-import { SELECTED_ITEMS_KEY } from '@/constants';
-import { currentModeAtom } from '@/store/atoms';
+import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 
 type Props = { title: string };
 
@@ -25,23 +23,26 @@ export default function Header({ title }: Props) {
 
 function ToggleButtons() {
   const [currentMode, setCurrentMode] = useAtom(currentModeAtom);
+  const setSelectedItems = useSetAtom(selectedItemsAtom);
 
-  const toggleCurrentMode = () => {
+  const handleClick = () => {
+    // toggle current mode
     setCurrentMode((prev) => (prev === 'view' ? 'edit' : 'view'));
+
+    // '완료' 클릭시, selectedItems 초기화
+    if (currentMode === 'edit') setSelectedItems([]);
   };
 
   return (
-    <button onClick={toggleCurrentMode} className="text-lg font-medium text-main-theme-color">
+    <button onClick={handleClick} className="text-lg font-medium text-main-theme-color">
       {currentMode === 'view' ? '편집' : '완료'}
     </button>
   );
 }
 
 function ActionButtons() {
-  const searchParams = useSearchParams();
   const currentMode = useAtomValue(currentModeAtom);
-  const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
-  const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
+  const selectedItems = useAtomValue(selectedItemsAtom);
 
   return (
     <div className="w-[28px] flex gap-3">
