@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { updateReview } from '@/books/[id]/actions';
 
 const wrapperStyles = 'group flex justify-between items-center gap-3';
@@ -15,7 +15,6 @@ type Props = {
 function EditableReview({ review: initialReview, bookId }: Props) {
   const [review, setReview] = useState(initialReview ?? '');
   const [isEditing, setIsEditing] = useState(false);
-  const [_, startTransition] = useTransition();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReview(event.target.value);
@@ -25,17 +24,15 @@ function EditableReview({ review: initialReview, bookId }: Props) {
     setIsEditing(true);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    startTransition(async () => {
-      try {
-        await updateReview(bookId, review);
-        setIsEditing(false);
-      } catch (error) {
-        console.error('Failed to update review:', error);
-      }
-    });
+    try {
+      await updateReview(bookId, review);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to update review:', error);
+    }
   };
 
   return (
