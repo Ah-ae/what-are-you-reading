@@ -89,6 +89,13 @@ export async function createAccount(prevState: any, formData: FormData) {
       },
     });
 
+    // Create a bookshelf for the new user
+    await db.bookshelf.create({
+      data: {
+        ownerId: user.id,
+      },
+    });
+
     await login(user.id);
     redirect('/mine');
   } else {
