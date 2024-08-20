@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useAtom, useAtomValue } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import HeaderLayout from '@/layout/header';
 import { DeleteBooks } from '@/ui/bookshelf/buttons';
-import { SELECTED_ITEMS_KEY } from '@/constants';
+import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 
 type Props = { title: string };
 
@@ -22,16 +23,15 @@ export default function Header({ title }: Props) {
 }
 
 function ToggleButtons() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const currentMode = searchParams.get('mode') || 'view';
+  const [currentMode, setCurrentMode] = useAtom(currentModeAtom);
+  const resetSelectedItems = useResetAtom(selectedItemsAtom);
 
   const handleClick = () => {
-    const newMode = currentMode === 'view' ? 'edit' : 'view';
-    const params = new URLSearchParams(searchParams);
-    params.set('mode', newMode);
-    replace(`${pathname}?${params}`);
+    // toggle current mode
+    setCurrentMode((prev) => (prev === 'view' ? 'edit' : 'view'));
+
+    // '완료' 클릭시, selectedItems 초기화
+    if (currentMode === 'edit') resetSelectedItems();
   };
 
   return (
@@ -42,10 +42,8 @@ function ToggleButtons() {
 }
 
 function ActionButtons() {
-  const searchParams = useSearchParams();
-  const currentMode = searchParams.get('mode') || 'view';
-  const selectedItemsParam = searchParams.get(SELECTED_ITEMS_KEY);
-  const selectedItems = selectedItemsParam ? selectedItemsParam.split(',').map(Number) : [];
+  const currentMode = useAtomValue(currentModeAtom);
+  const selectedItems = useAtomValue(selectedItemsAtom);
 
   return (
     <div className="w-[28px] flex gap-3">

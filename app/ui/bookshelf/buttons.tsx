@@ -1,24 +1,20 @@
 import { useState } from 'react';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useResetAtom } from 'jotai/utils';
 import clsx from 'clsx';
 import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import { deleteBooks } from '@/lib/actions';
-import { SELECTED_ITEMS_KEY } from '@/constants';
+import { selectedItemsAtom } from '@/store/atoms';
 
 export function DeleteBooks({ ids }: { ids: number[] }) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
   const disabled = ids.length === 0 || isDeleting;
+  const resetSelectedItems = useResetAtom(selectedItemsAtom);
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
       await deleteBooks(ids);
-      const params = new URLSearchParams(searchParams);
-      params.delete(SELECTED_ITEMS_KEY);
-      replace(`${pathname}?${params.toString()}`);
+      resetSelectedItems();
     } catch (error) {
       console.error('Error deleting books:', error);
     } finally {
