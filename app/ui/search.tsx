@@ -20,7 +20,7 @@ function Search({ wrapperClassName = '', ...args }: Props & InputHTMLAttributes<
     } else {
       params.delete('query');
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (

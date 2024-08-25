@@ -1,4 +1,7 @@
 import HeaderLayout from '@/layout/header';
+import BackButton from '@/ui/back-button';
+import DeleteKeywordsButton from '@/ui/books/delete-keywords-button';
+import KeywordList from '@/ui/books/keyword-list';
 import SearchForm from '@/ui/books/search-form';
 import Tab from '@/ui/books/tab';
 
@@ -21,18 +24,19 @@ export default function AddBook({
 
   return (
     <>
-      {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
-        <button>뒤로</button>
+        <BackButton />
         <div>
           <h2 className="text-xl font-medium dark:text-neutral-200">검색 목록</h2>
         </div>
-        <button>목록 삭제</button>
+        <DeleteKeywordsButton />
       </HeaderLayout>
 
-      <section className="p-4">
+      {/* Note: `pt-14` - header height만큼 공간 확보 + page section의 자체 패딩 */}
+      <section className="pt-20 px-4 pb-4">
         <SearchForm query={query} target={target} />
         <Tab tabs={tabs} />
+        <KeywordList />
       </section>
     </>
   );

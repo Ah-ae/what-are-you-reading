@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useSetAtom } from 'jotai';
 import Search from '@/ui/search';
+import { keywordListAtom } from '@/store/atoms';
 
 type Props = {
   query: string;
@@ -10,6 +12,7 @@ type Props = {
 
 export default function SearchForm({ query, target }: Props) {
   const router = useRouter();
+  const setKeywordList = useSetAtom(keywordListAtom);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,6 +21,12 @@ export default function SearchForm({ query, target }: Props) {
     const formattedParams = new URLSearchParams(params).toString();
 
     router.push(`/books/add/list?${formattedParams}`);
+    setKeywordList((prev) => {
+      if (!prev.includes(query)) {
+        return [...prev, query];
+      }
+      return prev;
+    });
   };
 
   return (

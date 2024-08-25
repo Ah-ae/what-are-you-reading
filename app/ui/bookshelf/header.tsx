@@ -1,11 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import { PlusIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import HeaderLayout from '@/layout/header';
-import { DeleteBooks } from '@/ui/bookshelf/buttons';
+import { AddBook, DeleteBooks, RearrangeBooks } from '@/ui/bookshelf/buttons';
 import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 
 type Props = { title: string };
@@ -48,15 +46,11 @@ function ActionButtons() {
   return (
     <div className="w-[28px] flex gap-3">
       {currentMode === 'view' ? (
-        <Link href="/books/add">
-          <PlusIcon className="size-6 font-bold text-main-theme-color dark:text-blue-500" />
-        </Link>
+        <AddBook />
       ) : (
         <>
           <DeleteBooks ids={selectedItems} />
-          <button>
-            <Bars3BottomLeftIcon className="size-6 font-bold text-main-theme-color dark:text-blue-500" />
-          </button>
+          <RearrangeBooks />
         </>
       )}
     </div>
