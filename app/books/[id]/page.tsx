@@ -69,7 +69,8 @@ export default async function BookDetail({ params }: Props) {
         <BackButton />
       </HeaderLayout>
 
-      <section className="flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
+      {/* Note: `pt-[60px]` - header height만큼 공간 확보 */}
+      <section className="pt-[60px] flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
         <div>
           <div className="dark:bg-zinc-900">
             <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
