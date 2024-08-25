@@ -35,7 +35,7 @@ export default async function Settings() {
             <ChevronRightIcon className="size-5 text-zinc-400" />
           </Link>
           <Link href="/settings/friends" className={containerStyles} scroll={false}>
-            <span>친구</span>
+            <span>친구 관리</span>
             <ChevronRightIcon className="size-5 text-zinc-400" />
           </Link>
         </div>
