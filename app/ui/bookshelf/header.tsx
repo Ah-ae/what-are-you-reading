@@ -2,7 +2,7 @@
 
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import HeaderLayout from '@/layout/header';
+import HeaderLayout from '@/layout/three-items-header';
 import { AddBook, DeleteBooks, RearrangeBooks } from '@/ui/bookshelf/buttons';
 import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 

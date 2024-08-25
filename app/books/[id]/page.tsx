@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
-import HeaderLayout from '@/layout/header';
+import HeaderLayout from '@/layout/three-items-header';
 import EditableReview from '@/ui/books/editable-review';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import StarRating from '@/ui/books/star-rating';

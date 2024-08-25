@@ -1,4 +1,4 @@
-import HeaderLayout from '@/layout/header';
+import HeaderLayout from '@/layout/three-items-header';
 import BookList from '@/ui/books/cards';
 import BackButton from '@/ui/back-button';
 import { searchBooks, checkOwnedBooks } from '@/books/add/list/actions';

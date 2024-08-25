@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getUser } from '@/lib/data';
-import HeaderLayout from '@/layout/header';
-import BackButton from '@/ui/back-button';
+import HeaderLayout from '@/layout/two-items-header';
 import EditableBox from '@/ui/editable-box';
 
 const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';
@@ -15,14 +14,7 @@ export default async function ProfileSettings() {
 
   return (
     <>
-      <HeaderLayout>
-        <BackButton>설정</BackButton>
-        <div>
-          <h2 className="text-xl font-medium dark:text-neutral-200">계정</h2>
-        </div>
-        <div />
-        <div />
-      </HeaderLayout>
+      <HeaderLayout backButtonText="설정" title="계정" />
 
       <div className="pt-10 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
         <div data-before="이름" className={`${beforePseudoElementStyles} ${containerStyles}`}>

@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import getSession from '@/lib/session';
-import HeaderLayout from '@/layout/header';
-import BackButton from '@/ui/back-button';
+import HeaderLayout from '@/layout/two-items-header';
 
 const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';
 const beforePseudoElementStyles =
@@ -19,13 +18,7 @@ export default async function Settings() {
 
   return (
     <>
-      <HeaderLayout>
-        <BackButton />
-        <div>
-          <h2 className="text-xl font-medium dark:text-neutral-200">설정</h2>
-        </div>
-        <div />
-      </HeaderLayout>
+      <HeaderLayout title="설정" />
 
       <div className="flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
         <div>

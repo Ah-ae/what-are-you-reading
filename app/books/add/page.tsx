@@ -1,4 +1,4 @@
-import HeaderLayout from '@/layout/header';
+import HeaderLayout from '@/layout/three-items-header';
 import BackButton from '@/ui/back-button';
 import DeleteKeywordsButton from '@/ui/books/delete-keywords-button';
 import KeywordList from '@/ui/books/keyword-list';

@@ -1,17 +1,9 @@
-import HeaderLayout from '@/layout/header';
-import BackButton from '@/ui/back-button';
+import HeaderLayout from '@/layout/two-items-header';
 
 export default function FriendsSettings() {
   return (
     <>
-      <HeaderLayout>
-        <BackButton>설정</BackButton>
-        <div>
-          <h2 className="text-xl font-medium dark:text-neutral-200">친구 관리</h2>
-        </div>
-        <div />
-        <div />
-      </HeaderLayout>
+      <HeaderLayout backButtonText="설정" title="친구 관리" />
 
       <div className="py-4 text-center">
         <p>준비 중인 기능입니다.</p>
