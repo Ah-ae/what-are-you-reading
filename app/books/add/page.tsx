@@ -1,5 +1,7 @@
 import HeaderLayout from '@/layout/header';
 import BackButton from '@/ui/back-button';
+import DeleteKeywordsButton from '@/ui/books/delete-keywords-button';
+import KeywordList from '@/ui/books/keyword-list';
 import SearchForm from '@/ui/books/search-form';
 import Tab from '@/ui/books/tab';
 
@@ -27,12 +29,13 @@ export default function AddBook({
         <div>
           <h2 className="text-xl font-medium dark:text-neutral-200">검색 목록</h2>
         </div>
-        <button>목록 삭제</button>
+        <DeleteKeywordsButton />
       </HeaderLayout>
 
       <section className="p-4">
         <SearchForm query={query} target={target} />
         <Tab tabs={tabs} />
+        <KeywordList />
       </section>
     </>
   );
