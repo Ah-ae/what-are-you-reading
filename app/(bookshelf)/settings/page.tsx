@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import getSession from '@/lib/session';
@@ -29,14 +30,14 @@ export default async function Settings() {
 
       <div className="flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900  *:bg-white *:dark:bg-zinc-800">
         <div>
-          <div className={containerStyles}>
+          <Link href="/settings/profile" className={containerStyles} scroll={false}>
             <span>계정</span>
             <ChevronRightIcon className="size-5 text-zinc-400" />
-          </div>
-          <div className={containerStyles}>
+          </Link>
+          <Link href="/settings/friends" className={containerStyles} scroll={false}>
             <span>친구</span>
             <ChevronRightIcon className="size-5 text-zinc-400" />
-          </div>
+          </Link>
         </div>
 
         <div data-before="앱 관리" className={`${beforePseudoElementStyles} ${containerStyles}`}>
@@ -44,7 +45,7 @@ export default async function Settings() {
           <span className="text-main-theme-color dark:text-blue-500">0.0.0</span>
         </div>
 
-        <form action={logout} className={containerStyles}>
+        <form action={logout} className={`${containerStyles} cursor-pointer`}>
           <button className="text-zinc-400">로그아웃</button>
         </form>
       </div>
