@@ -25,10 +25,9 @@ export default async function Settings() {
           <h2 className="text-xl font-medium dark:text-neutral-200">설정</h2>
         </div>
         <div />
-        <div />
       </HeaderLayout>
 
-      <div className="flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900  *:bg-white *:dark:bg-zinc-800">
+      <div className="flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
         <div>
           <Link href="/settings/profile" className={containerStyles} scroll={false}>
             <span>계정</span>
