@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import { useResetAtom } from 'jotai/utils';
 import clsx from 'clsx';
 import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
@@ -30,6 +31,22 @@ export function DeleteBooks({ ids }: { ids: number[] }) {
           'text-neutral-400': disabled,
         })}
       />
+    </button>
+  );
+}
+
+export function AddBook() {
+  return (
+    <Link href="/books/add">
+      <PlusIcon className="size-6 stroke-2 text-main-theme-color dark:text-blue-500" />
+    </Link>
+  );
+}
+
+export function RearrangeBooks() {
+  return (
+    <button>
+      <Bars3BottomLeftIcon className="size-6 font-bold text-main-theme-color dark:text-blue-500" />
     </button>
   );
 }
