@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getUser } from '@/lib/data';
-import HeaderLayout from '@/layout/two-items-header';
+import HeaderLayout from '@/layout/header';
 import EditableBox from '@/ui/editable-box';
 
 const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';

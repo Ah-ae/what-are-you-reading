@@ -2,11 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
-import HeaderLayout from '@/layout/three-items-header';
+import HeaderLayout from '@/layout/header';
 import EditableReview from '@/ui/books/editable-review';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import StarRating from '@/ui/books/star-rating';
-import BackButton from '@/ui/back-button';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 
@@ -65,9 +64,7 @@ export default async function BookDetail({ params }: Props) {
 
   return (
     <>
-      <HeaderLayout>
-        <BackButton />
-      </HeaderLayout>
+      <HeaderLayout />
 
       {/* Note: `pt-[60px]` - header height만큼 공간 확보 */}
       <section className="pt-[60px] flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">

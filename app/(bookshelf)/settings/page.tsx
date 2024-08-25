@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import getSession from '@/lib/session';
-import HeaderLayout from '@/layout/two-items-header';
+import HeaderLayout from '@/layout/header';
 
 const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';
 const beforePseudoElementStyles =

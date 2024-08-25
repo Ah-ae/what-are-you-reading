@@ -1,4 +1,4 @@
-import HeaderLayout from '@/layout/two-items-header';
+import HeaderLayout from '@/layout/header';
 
 export default function FriendsSettings() {
   return (

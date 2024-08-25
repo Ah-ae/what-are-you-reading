@@ -1,6 +1,5 @@
-import HeaderLayout from '@/layout/three-items-header';
+import HeaderLayout from '@/layout/header';
 import BookList from '@/ui/books/cards';
-import BackButton from '@/ui/back-button';
 import { searchBooks, checkOwnedBooks } from '@/books/add/list/actions';
 import getSession from '@/lib/session';
 
@@ -26,9 +25,7 @@ export default async function List({
 
   return (
     <>
-      <HeaderLayout>
-        <BackButton>검색 목록</BackButton>
-      </HeaderLayout>
+      <HeaderLayout backButtonText="검색 목록" />
 
       {/* Note: `pt-14` - header height만큼 공간 확보 + page section의 자체 패딩 */}
       <section className="pt-16 px-4 pb-4">
