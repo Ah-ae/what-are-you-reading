@@ -21,7 +21,12 @@ export default function SearchForm({ query, target }: Props) {
     const formattedParams = new URLSearchParams(params).toString();
 
     router.push(`/books/add/list?${formattedParams}`);
-    setKeywordList((prev) => [...prev, query]);
+    setKeywordList((prev) => {
+      if (!prev.includes(query)) {
+        return [...prev, query];
+      }
+      return prev;
+    });
   };
 
   return (
