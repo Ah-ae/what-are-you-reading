@@ -6,6 +6,7 @@ import HeaderLayout from '@/layout/header';
 import EditableReview from '@/ui/books/editable-review';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import StarRating from '@/ui/books/star-rating';
+import BackButton from '@/ui/back-button';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
 
@@ -64,9 +65,8 @@ export default async function BookDetail({ params }: Props) {
 
   return (
     <>
-      {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
-        <button>뒤로</button>
+        <BackButton />
       </HeaderLayout>
 
       <section className="min-h-screen flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">

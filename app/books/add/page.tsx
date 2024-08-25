@@ -1,4 +1,5 @@
 import HeaderLayout from '@/layout/header';
+import BackButton from '@/ui/back-button';
 import SearchForm from '@/ui/books/search-form';
 import Tab from '@/ui/books/tab';
 
@@ -21,9 +22,8 @@ export default function AddBook({
 
   return (
     <>
-      {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
-        <button>뒤로</button>
+        <BackButton />
         <div>
           <h2 className="text-xl font-medium dark:text-neutral-200">검색 목록</h2>
         </div>

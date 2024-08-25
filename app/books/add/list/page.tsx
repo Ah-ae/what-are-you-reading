@@ -1,5 +1,6 @@
 import HeaderLayout from '@/layout/header';
 import BookList from '@/ui/books/cards';
+import BackButton from '@/ui/back-button';
 import { searchBooks, checkOwnedBooks } from '@/books/add/list/actions';
 import getSession from '@/lib/session';
 
@@ -25,9 +26,8 @@ export default async function List({
 
   return (
     <>
-      {/* //TODO: Header 버튼 스타일링 및 액션 입히기 */}
       <HeaderLayout>
-        <button>검색 목록</button>
+        <BackButton>검색 목록</BackButton>
       </HeaderLayout>
 
       <section className="p-4">
