@@ -1,12 +1,14 @@
 'use client';
 
 import Modal from '@/ui/modals/modal';
+import { deleteBook } from '@/books/[id]/actions';
 
 type Props = {
   closeModal: () => void;
+  bookId: number;
 };
 
-export default function DeleteBookConfirmModal({ closeModal }: Props) {
+export default function DeleteBookConfirmModal({ closeModal, bookId }: Props) {
   return (
     <Modal>
       <Modal.Title>삭제 확인</Modal.Title>
@@ -14,8 +16,8 @@ export default function DeleteBookConfirmModal({ closeModal }: Props) {
       <Modal.Footer>
         <Modal.CancelButton onClick={closeModal}>취소</Modal.CancelButton>
         <Modal.OkButton
-          onClick={() => {
-            /* 확인 처리 */
+          onClick={async () => {
+            await deleteBook(bookId);
           }}
         >
           확인
