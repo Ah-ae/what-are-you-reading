@@ -21,6 +21,7 @@ export default function RootLayout({
         className={`mx-auto ${MAX_WIDTH} shadow-xl bg-gray-100 text-neutral-900 dark:bg-zinc-900 dark:text-gray-100 ${inter.className}`}
       >
         <main className="min-h-screen bg-white dark:bg-zinc-950">{children}</main>
+        <div id="portal" />
       </body>
     </html>
   );
