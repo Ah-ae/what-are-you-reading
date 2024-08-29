@@ -66,8 +66,7 @@ export default async function BookDetail({ params }: Props) {
     <>
       <HeaderLayout />
 
-      {/* Note: `pt-[60px]` - header height만큼 공간 확보 */}
-      <section className="pt-[60px] flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
+      <section className="h-screen pt-14 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
         <div>
           <div className="dark:bg-zinc-900">
             <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
@@ -118,14 +117,16 @@ export default async function BookDetail({ params }: Props) {
 
         <div
           data-before="도서 정보는 Daum에서 제공합니다."
-          className={`${beforePseudoElementStyles} ${containerStyles} hover:bg-zinc-200 dark:hover:bg-neutral-600`}
+          className={`${beforePseudoElementStyles} ${containerStyles}`}
         >
           <Link href={url} className="text-neutral-900 dark:text-gray-100">
             <p className={itemStyles}>Daum 검색에서 보기</p>
           </Link>
         </div>
 
-        {/* // TODO: '책 삭제' text button 마크업 및 DB 연동 */}
+        <div className="flex justify-center group-last:bg-inherit">
+          <button className="text-red-600">책 삭제</button>
+        </div>
       </section>
     </>
   );
