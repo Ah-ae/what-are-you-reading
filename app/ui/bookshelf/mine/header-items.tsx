@@ -2,25 +2,10 @@
 
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import HeaderLayout from '@/layout/header';
 import { AddBook, DeleteBooks, RearrangeBooks } from '@/ui/bookshelf/buttons';
 import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 
-type Props = { title: string };
-
-export default function Header({ title }: Props) {
-  return (
-    <HeaderLayout>
-      <ActionButtons />
-      <div>
-        <h2 className="text-xl font-medium dark:text-neutral-200">{title}</h2>
-      </div>
-      <ToggleButtons />
-    </HeaderLayout>
-  );
-}
-
-function ToggleButtons() {
+export function ToggleButtons() {
   const [currentMode, setCurrentMode] = useAtom(currentModeAtom);
   const resetSelectedItems = useResetAtom(selectedItemsAtom);
 
@@ -39,7 +24,7 @@ function ToggleButtons() {
   );
 }
 
-function ActionButtons() {
+export function ActionButtons() {
   const currentMode = useAtomValue(currentModeAtom);
   const selectedItems = useAtomValue(selectedItemsAtom);
 

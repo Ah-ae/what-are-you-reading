@@ -1,5 +1,6 @@
 import { getUser, fetchBooks } from '@/lib/data';
-import Header from '@/ui/bookshelf/header';
+import HeaderLayout from '@/layout/header';
+import { ActionButtons, ToggleButtons } from '@/ui/bookshelf/mine/header-items';
 import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
 
 export default async function Mine() {
@@ -7,7 +8,7 @@ export default async function Mine() {
   if (!user) {
     return (
       <>
-        <Header title="내 책장" />
+        <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={<ToggleButtons />} />
         <section>
           <div className="flex justify-center pt-10 px-6">
             <p>사용자를 찾을 수 없습니다.</p>
@@ -21,7 +22,7 @@ export default async function Mine() {
 
   return (
     <>
-      <Header title="내 책장" />
+      <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={<ToggleButtons />} />
       <div className="flex justify-center py-10 px-6">
         <div className="grid grid-cols-3 gap-10">
           {books.map((book) => (

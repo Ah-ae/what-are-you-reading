@@ -10,9 +10,5 @@ export default function DeleteKeywordsButton() {
     resetKeywordList();
   };
 
-  return (
-    <button onClick={handleDelete} className="text-main-theme-color dark:text-blue-500">
-      목록 삭제
-    </button>
-  );
+  return <button onClick={handleDelete}>목록 삭제</button>;
 }
