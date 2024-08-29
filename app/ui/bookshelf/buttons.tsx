@@ -37,7 +37,7 @@ export function DeleteBooks({ ids }: { ids: number[] }) {
 
 export function AddBook() {
   return (
-    <Link href="/books/add">
+    <Link href="/books/add" scroll={false}>
       <PlusIcon className="size-6 stroke-2 text-main-theme-color dark:text-blue-500" />
     </Link>
   );
