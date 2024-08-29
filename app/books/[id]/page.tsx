@@ -5,6 +5,7 @@ import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
 import EditableReview from '@/ui/books/editable-review';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
+import DeleteBookButton from '@/ui/books/delete-book-button';
 import StarRating from '@/ui/books/star-rating';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
@@ -124,9 +125,7 @@ export default async function BookDetail({ params }: Props) {
           </Link>
         </div>
 
-        <div className="flex justify-center group-last:bg-inherit">
-          <button className="text-red-600">책 삭제</button>
-        </div>
+        <DeleteBookButton />
       </section>
     </>
   );
