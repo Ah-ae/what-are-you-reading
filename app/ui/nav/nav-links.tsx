@@ -12,12 +12,12 @@ import { MAX_WIDTH } from '@/constants/style';
 
 const links = [
   { name: '내 책장', href: '/mine', defaultIcon: BookOpenIcon, selectedIcon: SolidBookOpenIcon },
-  {
-    name: '친구 책장',
-    href: '/yours',
-    defaultIcon: UsersIcon,
-    selectedIcon: SolidUsersIcon,
-  },
+  // {
+  //   name: '친구 책장',
+  //   href: '/yours',
+  //   defaultIcon: UsersIcon,
+  //   selectedIcon: SolidUsersIcon,
+  // },
   { name: '설정', href: '/settings', defaultIcon: Cog6ToothIcon, selectedIcon: SolidCog6ToothIcon },
 ];
 
