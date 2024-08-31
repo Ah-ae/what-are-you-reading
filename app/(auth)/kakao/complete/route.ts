@@ -106,6 +106,13 @@ export async function GET(request: NextRequest) {
     },
   });
 
+  // Create a bookshelf for the new user
+  await db.bookshelf.create({
+    data: {
+      ownerId: newUser.id,
+    },
+  });
+
   await login(newUser.id);
   redirect('/mine');
 }
