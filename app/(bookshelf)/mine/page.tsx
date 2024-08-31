@@ -2,6 +2,7 @@ import { getUser, fetchBooks } from '@/lib/data';
 import HeaderLayout from '@/layout/header';
 import { ActionButtons, ToggleButtons } from '@/ui/bookshelf/mine/header-items';
 import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 export default async function Mine() {
   const user = await getUser();
@@ -19,15 +20,22 @@ export default async function Mine() {
   }
 
   const books = await fetchBooks(user.id);
+  const hasBooks = books.length > 0;
 
   return (
     <>
-      <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={<ToggleButtons />} />
+      <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={hasBooks ? <ToggleButtons /> : null} />
       <div className="flex justify-center py-10 px-6">
-        <div className="grid grid-cols-3 gap-10">
-          {books.map((book) => (
-            <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
-          ))}
+        <div className={hasBooks ? 'grid grid-cols-3 gap-10' : undefined}>
+          {hasBooks ? (
+            books.map((book) => (
+              <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
+            ))
+          ) : (
+            <p className="flex items-center">
+              <PlusIcon className="size-4 stroke-2 mr-1" /> 아이콘을 눌러 책을 추가해 보세요.
+            </p>
+          )}
         </div>
       </div>
     </>

@@ -35,7 +35,7 @@ export function ActionButtons() {
       ) : (
         <>
           <DeleteBooks ids={selectedItems} />
-          <RearrangeBooks />
+          {/* <RearrangeBooks /> */}
         </>
       )}
     </div>
