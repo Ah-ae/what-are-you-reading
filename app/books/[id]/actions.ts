@@ -2,6 +2,7 @@
 
 import db from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export async function updateRating(bookId: number, rating: number) {
@@ -40,4 +41,14 @@ export async function updateReview(bookId: number, review: string) {
   } else {
     console.error(result.error);
   }
+}
+
+export async function deleteBook(bookId: number) {
+  await db.book.delete({
+    where: {
+      id: bookId,
+    },
+  });
+
+  redirect('/mine');
 }
