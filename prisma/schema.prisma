@@ -9,8 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -46,8 +47,8 @@ model Book {
   isbn        String
   rating      Int              @default(0)
   review      String? // 사용자가 남기는 한 줄 서평 
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
   Bookshelf   Bookshelf        @relation(fields: [bookshelfId], references: [id])
   bookshelfId Int
 }
