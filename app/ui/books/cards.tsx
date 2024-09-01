@@ -5,6 +5,9 @@ import Image from 'next/image';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { formatKoreanDate } from '@/utils/date';
 import { createBook, getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
+import { IMAGE_ASPECT_RATIO } from '@/constants/style';
+
+const SCALE_FACTOR = 5;
 
 type Props = {
   initialBooks: (KaKaoBookResponse & { isOwned?: boolean })[];
@@ -97,14 +100,20 @@ function BookCard({
   return (
     <li
       onClick={addBook}
-      className="pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+      className="relative pb-3 flex gap-5 border-b last:border-b-0 border-neutral-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
     >
-      <div className="relative w-20 shadow-lg">
-        <Image src={thumbnail} alt={title} fill className="object-top" />
+      <div className="flex items-center">
+        <Image
+          src={thumbnail}
+          alt={title}
+          className="object-top shadow-lg"
+          width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+          height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+        />
       </div>
-      <div className="w-96 flex flex-col justify-between gap-2 *:rounded-md">
+      <div className="w-[28rem] flex flex-col justify-between gap-2 *:rounded-md">
         <span className="font-semibold">{title}</span>
-        <div className="flex flex-col *:text-neutral-500">
+        <div className="flex flex-col *:text-neutral-500 *:text-sm">
           <span>
             {/* Daum 도서 API 응답 결과 중 간혹 authors 배열이 빈 배열로 들어오는 값이 있음 */}
             {authors.length > 0 && `${authors.join(', ')} 지음`}
@@ -115,8 +124,12 @@ function BookCard({
           <span className="">{formatKoreanDate(datetime)}</span>
         </div>
       </div>
-      <div className={`flex items-center ${isOwned ? 'block' : 'invisible'}`}>
-        <CheckIcon className="size-8 text-main-theme-color dark:text-blue-500" />
+      <div
+        className={`absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center ${
+          isOwned ? 'block' : 'invisible'
+        }`}
+      >
+        <CheckIcon className="size-7 text-main-theme-color dark:text-blue-500" />
       </div>
     </li>
   );
