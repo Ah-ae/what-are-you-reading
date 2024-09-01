@@ -25,7 +25,7 @@ export default async function Mine() {
   return (
     <>
       <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={hasBooks ? <ToggleButtons /> : null} />
-      <div className="flex justify-center py-10 px-6">
+      <div className="flex justify-center p-4">
         <div className={hasBooks ? 'grid grid-cols-3 gap-10' : undefined}>
           {hasBooks ? (
             books.map((book) => (

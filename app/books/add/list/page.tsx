@@ -27,11 +27,11 @@ export default async function List({
     <>
       <HeaderLayout backButtonText="검색 목록" />
 
-      {/* Note: `pt-14` - header height만큼 공간 확보 + page section의 자체 패딩 */}
-      <section className="pt-16 px-4 pb-4">
+      {/* Note: `pt-12` - header height만큼 공간 확보 + page section의 자체 패딩 */}
+      <section className="pt-14 px-4 pb-4">
         {ownedBookList.length > 0 ? (
           <>
-            <p className="text-center">책을 선택하면 현재 책장에 바로 배치됩니다.</p>
+            <p className="text-sm text-center">책을 선택하면 현재 책장에 바로 배치됩니다.</p>
             <BookList initialBooks={ownedBookList} query={query} target={target} />
           </>
         ) : (

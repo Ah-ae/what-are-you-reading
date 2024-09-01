@@ -18,7 +18,7 @@ export function ToggleButtons() {
   };
 
   return (
-    <button onClick={handleClick} className="text-lg font-medium text-main-theme-color">
+    <button onClick={handleClick} className="font-medium text-main-theme-color">
       {currentMode === 'view' ? '편집' : '완료'}
     </button>
   );

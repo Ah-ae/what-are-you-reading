@@ -5,7 +5,7 @@ export default function Loading() {
     <>
       <HeaderLayout backButtonText="검색 목록" />
 
-      <div className="pt-24 px-5 flex flex-col gap-5 animate-pulse">
+      <div className="pt-20 px-5 flex flex-col gap-5 animate-pulse">
         {[...Array(12)].map((_, index) => (
           <div key={index} className="flex gap-5 *:rounded-md">
             <div className="w-20 h-24 bg-neutral-600" />

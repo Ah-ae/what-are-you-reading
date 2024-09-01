@@ -15,6 +15,12 @@ const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutral-700'
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
 
+const IMAGE_ASPECT_RATIO = {
+  WIDTH: 20,
+  HEIGHT: 29,
+};
+const SCALE_FACTOR = 4;
+
 type Props = {
   params: { id: string };
 };
@@ -67,24 +73,24 @@ export default async function BookDetail({ params }: Props) {
     <>
       <HeaderLayout />
 
-      <section className="h-screen pt-14 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
+      <section className="min-h-screen pt-12 pb-10 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
         <div>
           <div className="dark:bg-zinc-900">
-            <h3 className="pt-2 pb-4 text-xl font-semibold text-center">{title}</h3>
+            <h3 className="py-2 text-lg font-semibold text-center">{title}</h3>
             <div className="px-6 py-2 flex justify-between">
               {width && height ? (
                 <Image
                   src={thumbnail}
                   alt={title}
                   className="border shadow-xl"
-                  width={width}
-                  height={height}
+                  width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+                  height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
                   priority
                 />
               ) : (
                 <InvalidThumbnail />
               )}
-              <div className="flex flex-col justify-end items-end *:text-neutral-500">
+              <div className="flex flex-col justify-end items-end *:text-neutral-500 *:text-sm">
                 <span>{formatKoreanDate(datetime)}</span>
                 <span>{price.toLocaleString('ko-KR')}원</span>
                 <span>{isbn.split(' ')[1]}</span>

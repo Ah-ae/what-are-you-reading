@@ -15,8 +15,8 @@ export default function BackButton({ children = '뒤로' }: Props) {
   };
 
   return (
-    <button onClick={handleClick} className="flex gap-1 text-main-theme-color dark:text-blue-500">
-      <ChevronLeftIcon className="size-6 stroke-2" />
+    <button onClick={handleClick} className="flex items-center gap-1 text-main-theme-color dark:text-blue-500">
+      <ChevronLeftIcon className="size-5 stroke-2" />
       <span>{children}</span>
     </button>
   );

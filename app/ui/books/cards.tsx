@@ -55,7 +55,7 @@ export default function BookList({ initialBooks, query, target }: Props) {
   }, [page, query, target]);
 
   return (
-    <ul className="py-5 flex flex-col gap-3">
+    <ul className="py-3 flex flex-col gap-3">
       {books.map((book) => (
         <BookCard key={book.isbn + book.title} onAdd={handleAddBook} {...book} />
       ))}
