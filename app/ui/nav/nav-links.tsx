@@ -35,7 +35,11 @@ export default function NavLinks() {
           <li key={`link-${index}`} className="h-10 md:h-12 px-3 flex-center grow gap-2 rounded-md text-xs font-medium">
             <Link href={link.href} scroll={false} className="text-main-theme-color dark:text-gray-100">
               <div className="flex flex-col items-center">
-                {pathname === link.href ? <SelectedLinkIcon className="w-6" /> : <DefaultLinkIcon className="w-6" />}
+                {pathname.startsWith(link.href) ? (
+                  <SelectedLinkIcon className="w-6" />
+                ) : (
+                  <DefaultLinkIcon className="w-6" />
+                )}
                 <span>{link.name}</span>
               </div>
             </Link>
