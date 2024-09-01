@@ -28,7 +28,7 @@ export default function Modal({ children }: ChildrenProps) {
     <Portal>
       <Overlay />
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="px-6 py-4 bg-white rounded-lg dark:bg-zinc-900 dark:text-gray-100">{children}</div>
+        <div className="w-[75vw] px-6 py-4 bg-white rounded-lg dark:bg-zinc-900 dark:text-gray-100">{children}</div>
       </div>
     </Portal>
   );
