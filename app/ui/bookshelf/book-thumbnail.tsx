@@ -7,7 +7,10 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import InvalidThumbnail from '@/ui//invalid-thumbnail';
 import { getImageSize } from '@/utils/image';
+import { IMAGE_ASPECT_RATIO } from '@/constants/style';
 import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
+
+const SCALE_FACTOR = 4;
 
 type Props = { id: number; thumbnail: string; title: string };
 
@@ -40,8 +43,14 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
   }
 
   return currentMode === 'view' ? (
-    <Link href={`/books/${id}`} className="cursor-pointer" scroll={false}>
-      <Image src={thumbnail} alt={title} className="shadow-lg" width={width} height={height} />
+    <Link href={`/mine/${id}`} className="cursor-pointer" scroll={false}>
+      <Image
+        src={thumbnail}
+        alt={title}
+        className="shadow-lg"
+        width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+        height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+      />
     </Link>
   ) : (
     <div className="relative cursor-pointer" onClick={handleClick}>

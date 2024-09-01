@@ -1,7 +1,7 @@
 'use client';
 
 import Modal from '@/ui/modals/modal';
-import { deleteBook } from '@/books/[id]/actions';
+import { deleteBook } from '@/(bookshelf)/mine/[id]/actions';
 
 type Props = {
   closeModal: () => void;

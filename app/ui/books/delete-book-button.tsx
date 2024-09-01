@@ -16,7 +16,7 @@ export default function DeleteBookButton({ bookId }: { bookId: number }) {
 
   return (
     <>
-      <div className="flex justify-center group-last:bg-inherit">
+      <div className="pb-10 flex justify-center group-last:bg-inherit">
         <button onClick={openModal} className="text-red-600">
           책 삭제
         </button>

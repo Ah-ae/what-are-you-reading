@@ -16,7 +16,7 @@ export default async function ProfileSettings() {
     <>
       <HeaderLayout backButtonText="설정" title="계정" />
 
-      <div className="pt-10 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800">
+      <div className="pt-10 flex flex-col gap-12 *:bg-white *:dark:bg-zinc-800">
         <div data-before="이름" className={`${beforePseudoElementStyles} ${containerStyles}`}>
           <EditableBox id={user.id} field="name" text={user.name ?? ''} />
         </div>

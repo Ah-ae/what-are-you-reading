@@ -26,16 +26,20 @@ export default function NavLinks() {
 
   return (
     <ul
-      className={`w-full fixed bottom-0 left-1/2 transform -translate-x-1/2 ${MAX_WIDTH} px-3 md:px-8 py-2 flex justify-between bg-gray-50 dark:bg-zinc-700 border-t border-gray-200 dark:border-zinc-600`}
+      className={`w-full fixed bottom-0 left-1/2 transform -translate-x-1/2 ${MAX_WIDTH} md:px-8 py-1 flex justify-between bg-gray-50 dark:bg-zinc-700 border-t border-gray-200 dark:border-zinc-600`}
     >
       {links.map((link, index) => {
         const DefaultLinkIcon = link.defaultIcon;
         const SelectedLinkIcon = link.selectedIcon;
         return (
-          <li key={`link-${index}`} className="h-10 md:h-12 px-3 flex-center grow gap-2 rounded-md text-sm font-medium">
+          <li key={`link-${index}`} className="h-10 md:h-12 px-3 flex-center grow gap-2 rounded-md text-xs font-medium">
             <Link href={link.href} scroll={false} className="text-main-theme-color dark:text-gray-100">
               <div className="flex flex-col items-center">
-                {pathname === link.href ? <SelectedLinkIcon className="w-6" /> : <DefaultLinkIcon className="w-6" />}
+                {pathname.startsWith(link.href) ? (
+                  <SelectedLinkIcon className="w-6" />
+                ) : (
+                  <DefaultLinkIcon className="w-6" />
+                )}
                 <span>{link.name}</span>
               </div>
             </Link>

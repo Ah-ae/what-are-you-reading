@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { updateReview } from '@/books/[id]/actions';
+import { updateReview } from '@/(bookshelf)/mine/[id]/actions';
 
 const wrapperStyles = 'group flex justify-between items-center gap-3';
 const textButtonStyles =
