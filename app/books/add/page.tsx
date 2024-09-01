@@ -26,7 +26,7 @@ export default function AddBook({
       <HeaderLayout title="검색 목록" rightItem={<DeleteKeywordsButton />} />
 
       {/* Note: `pt-14` - header height만큼 공간 확보 + page section의 자체 패딩 */}
-      <section className="pt-20 px-4 pb-4">
+      <section className="pt-20 px-3 pb-4">
         <SearchForm query={query} target={target} />
         <Tab tabs={tabs} />
         <KeywordList />
