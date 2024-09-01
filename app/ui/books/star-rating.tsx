@@ -2,7 +2,7 @@
 
 import { StarIcon } from '@heroicons/react/24/outline';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
-import { updateRating } from '@/books/[id]/actions';
+import { updateRating } from '@/(bookshelf)/mine/[id]/actions';
 
 const MAX_RATING = 5;
 const starIconStyles = 'size-5 text-sky-600 dark:text-blue-500 cursor-pointer';
