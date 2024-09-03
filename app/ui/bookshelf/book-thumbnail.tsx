@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import InvalidThumbnail from '@/ui//invalid-thumbnail';
 import { getImageSize } from '@/utils/image';
@@ -17,17 +16,10 @@ type Props = { id: number; thumbnail: string; title: string };
 export default function BookThumbnail({ id, thumbnail, title }: Props) {
   const { width, height } = getImageSize(thumbnail);
   const currentMode = useAtomValue(currentModeAtom);
-  const [isSelected, setIsSelected] = useState(false);
-  const setSelectedItems = useSetAtom(selectedItemsAtom);
-
-  useEffect(() => {
-    setIsSelected(false);
-  }, [currentMode]);
+  const [selectedItems, setSelectedItems] = useAtom(selectedItemsAtom);
+  const isSelected = selectedItems.includes(id);
 
   const handleClick = () => {
-    // 로컬 상태 isSelected 값 업데이트
-    setIsSelected((prev) => !prev);
-
     // 전역 상태 selectedItems 값 업데이트
     if (isSelected) {
       // id 삭제
@@ -60,7 +52,13 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
           <CheckCircleIcon className="absolute bottom-2 left-1/2 transform -translate-x-1/2 size-5 bg-red-600 text-white rounded-full" />
         </>
       )}
-      <Image src={thumbnail} alt={title} className="shadow-lg" width={width} height={height} />
+      <Image
+        src={thumbnail}
+        alt={title}
+        className="shadow-lg"
+        width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+        height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+      />
     </div>
   );
 }
