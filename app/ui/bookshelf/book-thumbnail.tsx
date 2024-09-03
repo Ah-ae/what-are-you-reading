@@ -52,7 +52,13 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
           <CheckCircleIcon className="absolute bottom-2 left-1/2 transform -translate-x-1/2 size-5 bg-red-600 text-white rounded-full" />
         </>
       )}
-      <Image src={thumbnail} alt={title} className="shadow-lg" width={width} height={height} />
+      <Image
+        src={thumbnail}
+        alt={title}
+        className="shadow-lg"
+        width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+        height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+      />
     </div>
   );
 }
