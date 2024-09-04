@@ -25,8 +25,8 @@ export default async function Mine() {
   return (
     <>
       <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={hasBooks ? <ToggleButtons /> : null} />
-      <div className="flex justify-center p-4">
-        <div className={hasBooks ? 'grid grid-cols-3 gap-x-12 gap-y-5' : undefined}>
+      <div className="flex justify-center p-6 md:p-10">
+        <div className={hasBooks ? 'grid grid-cols-3 gap-x-8 gap-y-5 md:gap-x-14 md:gap-y-14' : undefined}>
           {hasBooks ? (
             books.map((book) => (
               <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
