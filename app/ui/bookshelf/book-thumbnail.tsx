@@ -39,7 +39,7 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
       <Image
         src={thumbnail}
         alt={title}
-        className="shadow-lg"
+        className="shadow-lg md:scale-125"
         width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
         height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
       />
@@ -55,7 +55,7 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
       <Image
         src={thumbnail}
         alt={title}
-        className="shadow-lg"
+        className="shadow-lg md:scale-125"
         width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
         height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
       />
