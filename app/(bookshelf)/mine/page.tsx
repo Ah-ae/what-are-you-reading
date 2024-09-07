@@ -1,8 +1,13 @@
+import { unstable_cache as nextCache } from 'next/cache';
 import { getUser, fetchBooks } from '@/lib/data';
 import HeaderLayout from '@/layout/header';
 import { ActionButtons, ToggleButtons } from '@/ui/bookshelf/mine/header-items';
 import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
 import { PlusIcon } from '@heroicons/react/24/outline';
+
+const getCachedBooks = nextCache(fetchBooks, ['my-book-list'], {
+  tags: ['my-book-list'],
+});
 
 export default async function Mine() {
   const user = await getUser();
@@ -19,7 +24,7 @@ export default async function Mine() {
     );
   }
 
-  const books = await fetchBooks(user.id);
+  const books = await getCachedBooks(user.id);
   const hasBooks = books.length > 0;
 
   return (
