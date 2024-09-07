@@ -2,7 +2,7 @@
 
 import { useAtom, useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
-import { AddBook, DeleteBooks, RearrangeBooks } from '@/ui/bookshelf/buttons';
+import { DeleteBooks, RearrangeBooks } from '@/ui/bookshelf/buttons';
 import { currentModeAtom, selectedItemsAtom } from '@/store/atoms';
 
 export function ToggleButtons() {
@@ -30,9 +30,7 @@ export function ActionButtons() {
 
   return (
     <div className="w-[28px] flex gap-3">
-      {currentMode === 'view' ? (
-        <AddBook />
-      ) : (
+      {currentMode === 'edit' && (
         <>
           <DeleteBooks ids={selectedItems} />
           {/* <RearrangeBooks /> */}
