@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { unstable_cache as nextCache } from 'next/cache';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
 import HeaderLayout from '@/layout/header';
@@ -44,12 +45,20 @@ async function getBook(id: number) {
   return book;
 }
 
+const getCachedBook = (id: number) => {
+  const cashedOperation = nextCache(getBook, ['book'], {
+    tags: [`book-${id}`],
+  });
+
+  return cashedOperation(id);
+};
+
 export default async function BookDetail({ params }: Props) {
   const id = Number(params.id);
   // url에 /books/abc 처럼 숫자가 아닌 id를 직접 입력하고 진입할 때
   if (Number.isNaN(id)) return notFound();
 
-  const book = await getBook(id);
+  const book = await getCachedBook(id);
   // db에 해당 id의 book이 없을 때
   if (!book) return notFound();
 
