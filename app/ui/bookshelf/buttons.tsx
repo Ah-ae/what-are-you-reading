@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import { useResetAtom } from 'jotai/utils';
 import clsx from 'clsx';
-import { TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import { deleteBooks } from '@/lib/actions';
 import { selectedItemsAtom } from '@/store/atoms';
 
@@ -31,6 +32,14 @@ export function DeleteBooks({ ids }: { ids: number[] }) {
         })}
       />
     </button>
+  );
+}
+
+export function AddBook() {
+  return (
+    <Link href="/books/add" scroll={false}>
+      <PlusIcon className="size-6 stroke-2 text-main-theme-color dark:text-blue-500" />
+    </Link>
   );
 }
 
