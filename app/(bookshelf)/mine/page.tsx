@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { unstable_cache as nextCache } from 'next/cache';
 import { getUser } from '@/lib/data';
 import { getBooks } from '@/(bookshelf)/mine/actions';
@@ -32,16 +33,19 @@ export default async function Mine() {
     <>
       <HeaderLayout leftItem={<ActionButtons />} title="내 책장" rightItem={hasBooks ? <ToggleButtons /> : null} />
       <div className="flex justify-center p-6 md:p-10">
-        <div className={hasBooks ? 'grid grid-cols-3 gap-x-8 gap-y-5 md:gap-x-14 md:gap-y-14' : undefined}>
-          {hasBooks ? (
-            books.map((book) => (
+        <div className="grid grid-cols-3 gap-x-8 gap-y-5 md:gap-x-14 md:gap-y-14">
+          <>
+            {books.map((book) => (
               <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
-            ))
-          ) : (
-            <p className="flex items-center">
-              <PlusIcon className="size-4 stroke-2 mr-1" /> 아이콘을 눌러 책을 추가해 보세요.
-            </p>
-          )}
+            ))}
+            <Link
+              href="/books/add"
+              scroll={false}
+              className="w-[80px] h-[116px] flex-center bg-gray-100 shadow-lg md:scale-125"
+            >
+              <PlusIcon className="size-8 stroke-1 text-gray-700 border border-1 border-gray-700 rounded-full" />
+            </Link>
+          </>
         </div>
       </div>
     </>
