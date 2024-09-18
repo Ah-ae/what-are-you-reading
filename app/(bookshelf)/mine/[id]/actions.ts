@@ -1,7 +1,7 @@
 'use server';
 
 import db from '@/lib/db';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -15,7 +15,7 @@ export async function updateRating(bookId: number, rating: number) {
     },
   });
 
-  revalidatePath(`/books/${bookId}`);
+  revalidateTag(`book-${bookId}`);
 }
 
 const ReviewFormSchema = z.object({
