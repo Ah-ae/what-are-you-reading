@@ -1,6 +1,6 @@
 'use client';
 
-import { useOptimistic } from 'react';
+import { useOptimistic, startTransition } from 'react';
 import { StarIcon } from '@heroicons/react/24/outline';
 import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import { updateRating } from '@/(bookshelf)/mine/[id]/actions';
@@ -29,8 +29,9 @@ export default function StarRating({ rating, bookId }: Props) {
     const prevRating = optimisticRating;
 
     // ui를 먼저 낙관적으로 업데이트
-    setOptimisticRating(newRating);
-
+    startTransition(() => {
+      setOptimisticRating(newRating);
+    });
     try {
       // 서버 업데이트
       await updateRating(bookId, newRating);
@@ -38,7 +39,9 @@ export default function StarRating({ rating, bookId }: Props) {
       console.error('Failed to update rating:', error);
 
       // 서버 업데이트 실패 시 원래 상태로 롤백
-      setOptimisticRating(prevRating);
+      startTransition(() => {
+        setOptimisticRating(prevRating);
+      });
     }
   };
 
