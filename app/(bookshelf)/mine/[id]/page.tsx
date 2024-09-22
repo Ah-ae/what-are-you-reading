@@ -79,7 +79,7 @@ export default async function BookDetail({ params }: Props) {
     <>
       <HeaderLayout />
 
-      <section className="h-full pb-12 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
+      <section className="min-h-[calc(100dvh-6rem)] pb-12 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
         <div>
           <div className="dark:bg-zinc-900">
             <h3 className="py-2 text-lg font-semibold text-center">{title}</h3>
