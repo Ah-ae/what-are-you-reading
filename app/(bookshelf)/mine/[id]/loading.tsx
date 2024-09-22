@@ -1,8 +1,17 @@
+'use client';
+
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import HeaderLayout from '@/layout/header';
-import { containerStyles, itemStyles, beforePseudoElementStyles } from '@/(bookshelf)/mine/[id]/page';
 import StarRating from '@/ui/books/star-rating';
+import { containerStyles, itemStyles, beforePseudoElementStyles, SCALE_FACTOR } from '@/(bookshelf)/mine/[id]/page';
+import { IMAGE_ASPECT_RATIO } from '@/constants/style';
 
 export default function Loading() {
+  const searchParams = useSearchParams();
+  const title = searchParams.get('title') ?? '';
+  const thumbnail = searchParams.get('thumbnail');
+
   return (
     <>
       <HeaderLayout />
@@ -10,11 +19,26 @@ export default function Loading() {
       <section className="animate-pulse min-h-[calc(100dvh-6rem)] pb-12 flex flex-col gap-12 bg-zinc-100 dark:bg-zinc-900 *:bg-white *:dark:bg-zinc-800 group">
         <div>
           <div className="dark:bg-zinc-900 *:rounded-md">
-            <div className="mx-auto my-2 w-40 h-7 bg-neutral-600" />
+            {title ? (
+              <h3 className="py-2 text-lg font-semibold text-center">{title}</h3>
+            ) : (
+              <div className="mx-auto my-2 w-40 h-7 bg-neutral-600" />
+            )}
 
             <div className="px-6 py-2 flex justify-between">
               {/* // TODO: 책 섬네일 이미지 자리 */}
-              <div className="w-20 h-28 bg-neutral-600" />
+              {thumbnail ? (
+                <Image
+                  src={thumbnail}
+                  alt={title}
+                  className="border shadow-xl"
+                  width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+                  height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+                  priority
+                />
+              ) : (
+                <div className="w-20 h-28 bg-neutral-600" />
+              )}
 
               <div className="flex flex-col justify-end items-end *:text-neutral-500 *:text-sm *:rounded-md">
                 <div className="mb-1 w-28 h-5 bg-neutral-600" />

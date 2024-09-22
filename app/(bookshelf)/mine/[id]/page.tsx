@@ -17,7 +17,7 @@ export const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutr
 export const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
 
-const SCALE_FACTOR = 4;
+export const SCALE_FACTOR = 4;
 
 type Props = {
   params: { id: string };
@@ -41,8 +41,6 @@ async function getBook(id: number) {
       },
     },
   });
-
-  await new Promise((r) => setTimeout(r, 100_000));
 
   return book;
 }
