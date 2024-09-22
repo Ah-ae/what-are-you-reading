@@ -10,14 +10,13 @@ import DeleteBookButton from '@/ui/books/delete-book-button';
 import StarRating from '@/ui/books/star-rating';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
-import { IMAGE_ASPECT_RATIO } from '@/constants/style';
-
-export const containerStyles = 'px-4 flex flex-col gap-2 border-y-[1px] dark:border-neutral-700';
-export const itemStyles = 'py-3 border-b-[1px] last:border-b-0 dark:border-neutral-700';
-export const beforePseudoElementStyles =
-  'before:content-[attr(data-before)] before:absolute before:-translate-y-8 before:text-neutral-500';
-
-export const SCALE_FACTOR = 4;
+import {
+  IMAGE_ASPECT_RATIO,
+  SCALE_FACTOR,
+  containerStyles,
+  itemStyles,
+  beforePseudoElementStyles,
+} from '@/constants/style';
 
 type Props = {
   params: { id: string };

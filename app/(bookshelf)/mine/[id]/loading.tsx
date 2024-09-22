@@ -4,8 +4,13 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import HeaderLayout from '@/layout/header';
 import StarRating from '@/ui/books/star-rating';
-import { containerStyles, itemStyles, beforePseudoElementStyles, SCALE_FACTOR } from '@/(bookshelf)/mine/[id]/page';
-import { IMAGE_ASPECT_RATIO } from '@/constants/style';
+import {
+  IMAGE_ASPECT_RATIO,
+  SCALE_FACTOR,
+  containerStyles,
+  itemStyles,
+  beforePseudoElementStyles,
+} from '@/constants/style';
 
 export default function Loading() {
   const searchParams = useSearchParams();
