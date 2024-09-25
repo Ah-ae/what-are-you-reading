@@ -41,7 +41,6 @@ export default function BookThumbnail({ id, thumbnail, title }: Props) {
         query: { thumbnail, title },
       }}
       className="cursor-pointer"
-      scroll={false}
     >
       <Image
         src={thumbnail}
