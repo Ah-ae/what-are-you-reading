@@ -11,6 +11,8 @@ const publicOnlyUrls: Routes = {
   '/login': true,
   '/kakao/start': true,
   '/kakao/complete': true,
+  '/google/start': true,
+  '/google/complete': true,
 };
 
 export async function middleware(request: NextRequest) {
