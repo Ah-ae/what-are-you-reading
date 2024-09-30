@@ -44,7 +44,7 @@ const ReviewFormSchema = z.object({
   review: z.string(),
 });
 
-export async function updateReview(bookId: number, field: string, review: string) {
+export async function updateReview(bookId: number, field: string = 'review', review: string) {
   const result = ReviewFormSchema.safeParse({
     review,
   });
