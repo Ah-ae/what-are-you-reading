@@ -5,6 +5,28 @@ import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
+export async function getBook(id: number) {
+  const book = await db.book.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      authors: {
+        select: {
+          author: true,
+        },
+      },
+      translators: {
+        select: {
+          translator: true,
+        },
+      },
+    },
+  });
+
+  return book;
+}
+
 export async function updateRating(bookId: number, rating: number) {
   await db.book.update({
     where: {

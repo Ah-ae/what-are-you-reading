@@ -1,11 +1,12 @@
 import { unstable_cache as nextCache } from 'next/cache';
-import { getUser, fetchBooks } from '@/lib/data';
+import { getUser } from '@/lib/data';
+import { getBooks } from '@/(bookshelf)/mine/actions';
 import HeaderLayout from '@/layout/header';
 import { ActionButtons, ToggleButtons } from '@/ui/bookshelf/mine/header-items';
 import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
-const getCachedBooks = nextCache(fetchBooks, ['my-book-list'], {
+const getCachedBooks = nextCache(getBooks, ['my-book-list'], {
   tags: ['my-book-list'],
 });
 

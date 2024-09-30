@@ -2,8 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { unstable_cache as nextCache } from 'next/cache';
 import { notFound } from 'next/navigation';
-import db from '@/lib/db';
-import { updateReview } from '@/(bookshelf)/mine/[id]/actions';
+import { getBook, updateReview } from '@/(bookshelf)/mine/[id]/actions';
 import HeaderLayout from '@/layout/header';
 import EditableBox from '@/ui/editable-box';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
@@ -22,28 +21,6 @@ import {
 type Props = {
   params: { id: string };
 };
-
-async function getBook(id: number) {
-  const book = await db.book.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      authors: {
-        select: {
-          author: true,
-        },
-      },
-      translators: {
-        select: {
-          translator: true,
-        },
-      },
-    },
-  });
-
-  return book;
-}
 
 const getCachedBook = (id: number) => {
   const cashedOperation = nextCache(getBook, ['book'], {
