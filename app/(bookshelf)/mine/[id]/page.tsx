@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { unstable_cache as nextCache } from 'next/cache';
 import { notFound } from 'next/navigation';
 import db from '@/lib/db';
+import { updateReview } from '@/(bookshelf)/mine/[id]/actions';
 import HeaderLayout from '@/layout/header';
-import EditableReview from '@/ui/books/editable-review';
+import EditableBox from '@/ui/editable-box';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import DeleteBookButton from '@/ui/books/delete-book-button';
 import StarRating from '@/ui/books/star-rating';
@@ -119,7 +120,7 @@ export default async function BookDetail({ params }: Props) {
 
         <div data-before="한 줄 평" className={`${beforePseudoElementStyles} ${containerStyles}`}>
           <div className={itemStyles}>
-            <EditableReview review={review} bookId={id} />
+            <EditableBox id={id} field="review" text={review} onUpdate={updateReview} />
           </div>
         </div>
 

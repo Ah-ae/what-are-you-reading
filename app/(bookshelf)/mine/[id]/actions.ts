@@ -1,7 +1,7 @@
 'use server';
 
 import db from '@/lib/db';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -22,7 +22,7 @@ const ReviewFormSchema = z.object({
   review: z.string(),
 });
 
-export async function updateReview(bookId: number, review: string) {
+export async function updateReview(bookId: number, field: string, review: string) {
   const result = ReviewFormSchema.safeParse({
     review,
   });
@@ -33,11 +33,11 @@ export async function updateReview(bookId: number, review: string) {
         id: bookId,
       },
       data: {
-        review: result.data.review,
+        [field]: result.data.review,
       },
     });
 
-    revalidatePath(`/books/${bookId}`);
+    revalidateTag(`book-${bookId}`);
   } else {
     console.error(result.error);
   }
