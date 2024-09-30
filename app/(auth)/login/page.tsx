@@ -1,4 +1,5 @@
 import KakaoLogin from '@/ui/kakao-login';
+import GoogleLogin from '@/ui/google-login';
 
 export default function Login() {
   return (
@@ -8,7 +9,10 @@ export default function Login() {
         <p>SNS 계정으로 로그인할 수 있어요.</p>
       </div>
 
-      <KakaoLogin />
+      <div className="flex flex-col gap-2">
+        <KakaoLogin />
+        <GoogleLogin />
+      </div>
     </div>
   );
 }
