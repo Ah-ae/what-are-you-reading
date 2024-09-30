@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useResetAtom } from 'jotai/utils';
 import clsx from 'clsx';
 import { PlusIcon, TrashIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
-import { deleteBooks } from '@/lib/actions';
+import { deleteBooks } from '@/(bookshelf)/mine/actions';
 import { selectedItemsAtom } from '@/store/atoms';
 
 export function DeleteBooks({ ids }: { ids: number[] }) {

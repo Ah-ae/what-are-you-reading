@@ -1,15 +1,15 @@
 'use client';
 
-import { updateProfile } from '@/(bookshelf)/settings/profile/actions';
 import { useState } from 'react';
 
 type Props = {
   id: number;
   text: string | null;
   field: string;
+  onUpdate: (id: number, field: string, value: string) => Promise<void>;
 };
 
-function EditableBox({ text: initialText, id, field }: Props) {
+function EditableBox({ text: initialText, id, field, onUpdate }: Props) {
   const [text, setText] = useState(initialText ?? '');
   const [isEditing, setIsEditing] = useState(false);
 
@@ -23,7 +23,7 @@ function EditableBox({ text: initialText, id, field }: Props) {
 
   const handleBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
     try {
-      await updateProfile(id, field, event.target.value);
+      await onUpdate(id, field, event.target.value);
       setIsEditing(false);
     } catch (error) {
       console.error('Failed to update review:', error);
