@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroImage from '/public/hero_256x256.png';
+import { IS_DEV_MODE } from '@/constants';
 
 export default function Home() {
   return (
@@ -14,6 +15,11 @@ export default function Home() {
         <Link href="/login" className="primary-btn py-2.5 text-lg">
           시작하기
         </Link>
+        {IS_DEV_MODE && (
+          <Link href="/signup" className="primary-btn py-2.5 text-lg">
+            회원 가입
+          </Link>
+        )}
       </div>
     </div>
   );
