@@ -9,6 +9,7 @@ interface Routes {
 const publicOnlyUrls: Routes = {
   '/': true,
   '/login': true,
+  '/signup': true,
   '/kakao/start': true,
   '/kakao/complete': true,
 };
