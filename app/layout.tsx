@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="dark">
       <body
-        className={`mx-auto ${MAX_WIDTH} shadow-xl bg-gray-100 text-neutral-900 dark:bg-zinc-950 dark:text-gray-100 ${inter.className}`}
+        className={`mx-auto ${MAX_WIDTH} overflow-hidden shadow-xl bg-gray-100 text-neutral-900 dark:bg-zinc-950 dark:text-gray-100 ${inter.className}`}
       >
         <main className="min-h-screen bg-white dark:bg-zinc-900">{children}</main>
         <div id="portal" />
