@@ -8,7 +8,7 @@ export default function FriendsSettings() {
     <>
       <HeaderLayout backButtonText="설정" title="친구 관리" />
 
-      <div className="p-3">
+      <div className="p-3 bg-white dark:bg-inherit">
         <Tabs defaultValue="list">
           <TabsList>
             <TabsTrigger value="list">목록</TabsTrigger>

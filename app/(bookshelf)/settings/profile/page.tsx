@@ -4,7 +4,7 @@ import HeaderLayout from '@/layout/header';
 import EditableBox from '@/ui/editable-box';
 import { updateProfile } from '@/(bookshelf)/settings/profile/actions';
 
-const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';
+const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] border-zinc-200 dark:border-neutral-700';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-10 before:text-neutral-500';
 
