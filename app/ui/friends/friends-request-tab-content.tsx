@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import FriendCard from '@/ui/friends/friend-card';
 
 const friends: any[] = [
@@ -34,9 +35,12 @@ export default function FriendsRequestTabContent({}: Props) {
             <p>책장을 살펴보고 싶은 친구를 먼저 추가해 볼까요?</p>
           </div>
           <div className="flex-center">
-            <button className="px-3 rounded-full border border-main-theme-color dark:border-blue-500 text-main-theme-color dark:text-blue-500">
+            <Link
+              href="/friends/add"
+              className="px-3 rounded-full border border-main-theme-color dark:border-blue-500 text-main-theme-color dark:text-blue-500"
+            >
               친구 추가하기
-            </button>
+            </Link>
           </div>
         </div>
       )}
