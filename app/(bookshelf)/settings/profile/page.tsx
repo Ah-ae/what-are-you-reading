@@ -18,7 +18,7 @@ export default async function ProfileSettings() {
       <HeaderLayout backButtonText="설정" title="계정" />
 
       <div className="pt-10 flex flex-col gap-12 *:bg-white *:dark:bg-zinc-800">
-        <div data-before="사용자 ID (변경 뷸가)" className={`${beforePseudoElementStyles} ${containerStyles}`}>
+        <div data-before="사용자 ID (변경 불가)" className={`${beforePseudoElementStyles} ${containerStyles}`}>
           <span>
             {user.username.slice(0, 5)} {user.username.slice(5)}
           </span>
