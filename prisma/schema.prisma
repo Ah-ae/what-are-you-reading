@@ -15,17 +15,18 @@ datasource db {
 }
 
 model User {
-  id          Int        @id @default(autoincrement())
-  username    String     @unique
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
   name        String
   password    String?
-  kakao_id    String?    @unique
+  kakao_id    String?  @unique
   avatar      String?
   description String?
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  bookshelf   Bookshelf?
+  google_id   String?  @unique
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
+  bookshelf             Bookshelf?
   // 친구 관계 필드 추가
   requester_friendships Friendship[] @relation("requester_friendships")
   receiver_friendships  Friendship[] @relation("receiver_friendships")
@@ -47,10 +48,10 @@ model Book {
   price       Int
   publisher   String
   thumbnail   String
-  url         String // 책 정보에 대한 Daum 검색 결과 페이지 URL 
+  url         String // 책 정보에 대한 Daum 검색 결과 페이지 URL
   isbn        String
   rating      Int              @default(0)
-  review      String? // 사용자가 남기는 한 줄 서평 
+  review      String? // 사용자가 남기는 한 줄 서평
   created_at  DateTime         @default(now())
   updated_at  DateTime         @updatedAt
   Bookshelf   Bookshelf        @relation(fields: [bookshelfId], references: [id])
