@@ -6,7 +6,10 @@ export default function Yours() {
   return (
     <>
       <HeaderLayout title="친구 책장" leftItem={<AddFriend />} />
-      <div className="flex justify-center p-6 md:p-10"></div>
+      <div className="pt-10 flex-col flex-center gap-2">
+        <p>준비 중인 기능입니다.</p>
+        <p>조금만 기다려 주세요 👀</p>
+      </div>
     </>
   );
 }
