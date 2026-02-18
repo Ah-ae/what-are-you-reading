@@ -1,4 +1,3 @@
-import getSession from '@/lib/session';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Routes {
@@ -15,10 +14,12 @@ const publicOnlyUrls: Routes = {
 };
 
 export async function middleware(request: NextRequest) {
-  const session = await getSession();
+  // Edge Runtime에서는 iron-session을 사용할 수 없으므로 (eval 제한), 쿠키 존재 여부로 로그인 상태를 판단합니다.
+  // 실제 세션 검증은 각 페이지의 서버 컴포넌트/액션에서 처리됩니다.
+  const sessionCookie = request.cookies.get('wayr');
   const exists = publicOnlyUrls[request.nextUrl.pathname];
 
-  if (!session.id) {
+  if (!sessionCookie) {
     if (!exists) {
       return NextResponse.redirect(new URL('/', request.url));
     }
