@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { UserPlusIcon } from '@heroicons/react/24/outline';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import HeaderLayout from '@/layout/header';
 import FriendsListTabContent from '@/ui/friends/friends-list-tab-content';
@@ -9,7 +11,15 @@ export default async function FriendsSettings() {
 
   return (
     <>
-      <HeaderLayout backButtonText="설정" title="친구 관리" />
+      <HeaderLayout
+        backButtonText="설정"
+        title="친구 관리"
+        rightItem={
+          <Link href="/friends/add" scroll={false}>
+            <UserPlusIcon className="size-5 stroke-2" />
+          </Link>
+        }
+      />
 
       <div className="p-3 bg-white dark:bg-inherit">
         <Tabs defaultValue="list">
