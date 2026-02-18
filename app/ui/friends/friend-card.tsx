@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import type { FriendInfo } from '@/types/friends';
 import { acceptFriendRequest, rejectFriendRequest } from '@/friends/actions';
@@ -8,15 +9,20 @@ type Props = { friend: FriendInfo };
 
 export default function FriendCard({ friend }: Props) {
   const isPending = friend.status === 'PENDING';
+  const [loading, setLoading] = useState(false);
 
   const handleAccept = async () => {
+    setLoading(true);
     const result = await acceptFriendRequest(friend.friendshipId);
     if (result.error) alert(result.error);
+    setLoading(false);
   };
 
   const handleReject = async () => {
+    setLoading(true);
     const result = await rejectFriendRequest(friend.friendshipId);
     if (result.error) alert(result.error);
+    setLoading(false);
   };
 
   const formattedDate = new Date(friend.createdAt).toLocaleDateString('ko-KR', {
@@ -51,11 +57,16 @@ export default function FriendCard({ friend }: Props) {
         <div className="ml-auto flex gap-1">
           <button
             onClick={handleReject}
-            className="px-3 rounded-full border border-main-theme-color dark:border-blue-500 text-main-theme-color dark:text-blue-500"
+            disabled={loading}
+            className="px-3 rounded-full border border-main-theme-color dark:border-blue-500 text-main-theme-color dark:text-blue-500 disabled:opacity-50"
           >
             거절
           </button>
-          <button onClick={handleAccept} className="px-3 rounded-full bg-main-theme-color dark:bg-blue-500 text-white">
+          <button
+            onClick={handleAccept}
+            disabled={loading}
+            className="px-3 rounded-full bg-main-theme-color dark:bg-blue-500 text-white disabled:opacity-50"
+          >
             수락
           </button>
         </div>

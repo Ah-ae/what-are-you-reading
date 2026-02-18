@@ -23,6 +23,7 @@ export default function AddFriend() {
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [results, setResults] = useState<FriendInfo[]>([]);
   const [searched, setSearched] = useState(false);
+  const [sendingTo, setSendingTo] = useState<number | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,14 +39,17 @@ export default function AddFriend() {
   };
 
   const handleSendRequest = async (receiverId: number) => {
+    setSendingTo(receiverId);
     const result = await sendFriendRequest(receiverId);
     if (result.error) {
       alert(result.error);
+      setSendingTo(null);
       return;
     }
     // 요청 성공 후 결과 목록 갱신
     const users = await searchUsers(query);
     setResults(users);
+    setSendingTo(null);
   };
 
   const getStatusLabel = (friend: FriendInfo) => {
@@ -91,7 +95,8 @@ export default function AddFriend() {
                     ) : (
                       <button
                         onClick={() => handleSendRequest(user.id)}
-                        className="px-3 py-1 rounded-full bg-main-theme-color dark:bg-blue-500 text-white text-sm"
+                        disabled={sendingTo === user.id}
+                        className="px-3 py-1 rounded-full bg-main-theme-color dark:bg-blue-500 text-white text-sm disabled:opacity-50"
                       >
                         친구 신청
                       </button>
