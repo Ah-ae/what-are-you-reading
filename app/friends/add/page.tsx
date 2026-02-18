@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import HeaderLayout from '@/layout/header';
@@ -18,6 +18,14 @@ import { searchUsers, sendFriendRequest } from '@/friends/actions';
 import type { FriendInfo } from '@/types/friends';
 
 export default function AddFriend() {
+  return (
+    <Suspense>
+      <AddFriendContent />
+    </Suspense>
+  );
+}
+
+function AddFriendContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query') || '';
   const [showAlertDialog, setShowAlertDialog] = useState(false);
