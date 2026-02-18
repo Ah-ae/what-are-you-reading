@@ -52,7 +52,7 @@ export async function searchUsers(query: string): Promise<FriendInfo[]> {
       username: user.username,
       name: user.name,
       avatar: user.avatar,
-      status: friendship?.status ?? ('NONE' as any),
+      status: friendship?.status ?? 'NONE',
       createdAt: friendship?.created_at ?? new Date(),
     };
   });

@@ -6,6 +6,6 @@ export type FriendInfo = {
   username: string;
   name: string;
   avatar: string | null;
-  status: FriendshipStatus;
+  status: FriendshipStatus | 'NONE';
   createdAt: Date;
 };
