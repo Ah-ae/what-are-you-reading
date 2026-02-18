@@ -2,25 +2,13 @@
 
 import Link from 'next/link';
 import FriendCard from '@/ui/friends/friend-card';
-
-const friends: any[] = [
-  //   { id: 1, username: '120101482953', name: '산코', avatar: null },
-  //   { id: 2, username: '120101258432', name: '호두감자모카키코', avatar: null },
-  //   { id: 1, username: '120101482953', name: '산코', avatar: null },
-  //   { id: 2, username: '120101258432', name: '호두감자모카키코', avatar: null },
-  //   { id: 1, username: '120101482953', name: '산코', avatar: null },
-  //   { id: 2, username: '120101258432', name: '호두감자모카키코', avatar: null },
-  //   { id: 1, username: '120101482953', name: '산코', avatar: null },
-  //   { id: 2, username: '120101258432', name: '호두감자모카키코', avatar: null },
-  //   { id: 1, username: '120101482953', name: '산코', avatar: null },
-  //   { id: 2, username: '120101258432', name: '호두감자모카키코', avatar: null },
-];
+import type { FriendInfo } from '@/types/friends';
 
 type Props = {
-  // friends: User
+  friends: FriendInfo[];
 };
 
-export default function FriendsListTabContent({}: Props) {
+export default function FriendsListTabContent({ friends }: Props) {
   return (
     <>
       {friends.length > 0 ? (
@@ -28,9 +16,7 @@ export default function FriendsListTabContent({}: Props) {
           <h3 className="my-1 font-semibold">친구 ({friends.length}명)</h3>
           <ul className="max-h-[calc(100dvh-10rem)] pb-12 overflow-y-scroll">
             {friends.map((friend) => (
-              <li key={friend.id}>
-                {/* // TODO: ts-ignore 제거 */}
-                {/* @ts-ignore */}
+              <li key={friend.friendshipId}>
                 <FriendCard friend={friend} />
               </li>
             ))}

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import HeaderLayout from '@/layout/header';
 import SearchForm from '@/ui/books/search-form';
 import {
@@ -12,28 +14,44 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui';
+import { searchUsers, sendFriendRequest } from '@/friends/actions';
+import type { FriendInfo } from '@/types/friends';
 
-export default function AddFriend({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-  };
-}) {
-  const query = searchParams?.query || '';
+export default function AddFriend() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query') || '';
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [results, setResults] = useState<FriendInfo[]>([]);
+  const [searched, setSearched] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    console.log(query);
 
     if (query.length < 2) {
       setShowAlertDialog(true);
       return;
     }
 
-    // TODO: DB query 해서 사용자 목록 보여주기
+    const users = await searchUsers(query);
+    setResults(users);
+    setSearched(true);
+  };
+
+  const handleSendRequest = async (receiverId: number) => {
+    const result = await sendFriendRequest(receiverId);
+    if (result.error) {
+      alert(result.error);
+      return;
+    }
+    // 요청 성공 후 결과 목록 갱신
+    const users = await searchUsers(query);
+    setResults(users);
+  };
+
+  const getStatusLabel = (friend: FriendInfo) => {
+    if (friend.status === 'ACCEPTED') return '친구';
+    if (friend.status === 'PENDING') return '신청됨';
+    return null;
   };
 
   return (
@@ -43,9 +61,55 @@ export default function AddFriend({
       {/* Note: `pt-12` - header height만큼 공간 확보 + page section의 자체 패딩 */}
       <section className="pt-16 px-3 pb-4">
         <SearchForm onSubmit={handleSubmit} />
-        <div className="h-40 flex-center">
-          <p>친구의 이름을 검색하여 친구로 추가해 보세요.</p>
-        </div>
+
+        {searched && results.length > 0 ? (
+          <ul className="mt-3">
+            {results.map((user) => {
+              const statusLabel = getStatusLabel(user);
+              return (
+                <li key={user.id} className="py-2 flex items-center gap-2">
+                  {user.avatar ? (
+                    <Image
+                      src={user.avatar}
+                      alt={user.name}
+                      width={56}
+                      height={56}
+                      className="size-14 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="size-14 bg-gray-100 rounded-full" />
+                  )}
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{user.name}</span>
+                    <span className="text-sm">
+                      {user.username.slice(0, 5)} {user.username.slice(5)}
+                    </span>
+                  </div>
+                  <div className="ml-auto">
+                    {statusLabel ? (
+                      <span className="px-3 text-sm text-neutral-500">{statusLabel}</span>
+                    ) : (
+                      <button
+                        onClick={() => handleSendRequest(user.id)}
+                        className="px-3 py-1 rounded-full bg-main-theme-color dark:bg-blue-500 text-white text-sm"
+                      >
+                        친구 신청
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : searched && results.length === 0 ? (
+          <div className="h-40 flex-center">
+            <p>검색 결과가 없습니다.</p>
+          </div>
+        ) : (
+          <div className="h-40 flex-center">
+            <p>친구의 이름을 검색하여 친구로 추가해 보세요.</p>
+          </div>
+        )}
       </section>
 
       {showAlertDialog && (
