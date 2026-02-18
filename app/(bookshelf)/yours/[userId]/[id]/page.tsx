@@ -26,11 +26,11 @@ export default async function FriendBookDetail({ params }: Props) {
   const isFriend = await verifyFriendship(userId);
   if (!isFriend) return notFound();
 
-  const isOwner = await verifyBookOwnership(userId, bookId);
-  if (!isOwner) return notFound();
-
-  const book = await getBook(bookId);
-  if (!book) return notFound();
+  const [isOwner, book] = await Promise.all([
+    verifyBookOwnership(userId, bookId),
+    getBook(bookId),
+  ]);
+  if (!isOwner || !book) return notFound();
 
   const { title, thumbnail, datetime, price, authors, translators, publisher, url, isbn, rating, review, created_at } =
     book;

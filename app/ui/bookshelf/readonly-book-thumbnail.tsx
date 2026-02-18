@@ -2,9 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
 import { getImageSize } from '@/utils/image';
-import { IMAGE_ASPECT_RATIO } from '@/constants/style';
-
-const SCALE_FACTOR = 4;
+import { IMAGE_ASPECT_RATIO, SCALE_FACTOR } from '@/constants/style';
 
 type Props = { id: number; thumbnail: string; title: string; basePath: string };
 

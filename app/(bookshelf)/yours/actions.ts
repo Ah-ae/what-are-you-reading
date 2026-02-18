@@ -102,14 +102,11 @@ export async function verifyFriendship(friendUserId: number): Promise<boolean> {
 }
 
 export async function verifyBookOwnership(userId: number, bookId: number): Promise<boolean> {
-  const bookshelf = await db.bookshelf.findUnique({
-    where: { ownerId: userId },
-    select: { id: true },
-  });
-  if (!bookshelf) return false;
-
   const book = await db.book.findFirst({
-    where: { id: bookId, bookshelfId: bookshelf.id },
+    where: {
+      id: bookId,
+      Bookshelf: { ownerId: userId },
+    },
   });
   return !!book;
 }

@@ -14,13 +14,11 @@ export default async function FriendBookshelf({ params }: Props) {
   const isFriend = await verifyFriendship(userId);
   if (!isFriend) return notFound();
 
-  const friend = await db.user.findUnique({
-    where: { id: userId },
-    select: { name: true },
-  });
+  const [friend, books] = await Promise.all([
+    db.user.findUnique({ where: { id: userId }, select: { name: true } }),
+    getBooks(userId),
+  ]);
   if (!friend) return notFound();
-
-  const books = await getBooks(userId);
 
   return (
     <>
