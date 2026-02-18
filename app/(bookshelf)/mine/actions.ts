@@ -10,7 +10,9 @@ export async function getBooks(userId: number) {
         ownerId: userId,
       },
       include: {
-        books: true,
+        books: {
+          orderBy: { created_at: 'desc' },
+        },
       },
     });
 
