@@ -72,7 +72,7 @@ function AddFriendContent() {
 
       {/* Note: `pt-12` - header height만큼 공간 확보 + page section의 자체 패딩 */}
       <section className="pt-16 px-3 pb-4">
-        <SearchForm onSubmit={handleSubmit} />
+        <SearchForm onSubmit={handleSubmit} placeholder="친구 이름을 입력하세요" />
 
         {searched && results.length > 0 ? (
           <ul className="mt-3">
