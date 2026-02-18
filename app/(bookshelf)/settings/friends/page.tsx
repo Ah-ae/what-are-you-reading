@@ -1,13 +1,31 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import HeaderLayout from '@/layout/header';
+import FriendsListTabContent from '@/ui/friends/friends-list-tab-content';
+import FriendsRequestTabContent from '@/ui/friends/friends-request-tab-content';
+import { getFriendsList, getPendingRequests } from '@/friends/actions';
 
-export default function FriendsSettings() {
+export default async function FriendsSettings() {
+  const [friends, requests] = await Promise.all([getFriendsList(), getPendingRequests()]);
+
   return (
     <>
       <HeaderLayout backButtonText="설정" title="친구 관리" />
 
-      <div className="h-full py-4 text-center bg-white dark:bg-zinc-900">
-        <p>준비 중인 기능입니다.</p>
-        <p>조금만 기다려 주세요 👀</p>
+      <div className="p-3 bg-white dark:bg-inherit">
+        <Tabs defaultValue="list">
+          <TabsList>
+            <TabsTrigger value="list">목록</TabsTrigger>
+            <TabsTrigger value="request">신청</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="list">
+            <FriendsListTabContent friends={friends} />
+          </TabsContent>
+
+          <TabsContent value="request">
+            <FriendsRequestTabContent requests={requests} />
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );

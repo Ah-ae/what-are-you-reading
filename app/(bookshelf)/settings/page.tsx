@@ -24,7 +24,7 @@ export default async function Settings() {
         <div>
           <Link
             href="/settings/profile"
-            className={`${containerStyles} border-b-[1px] dark:border-neutral-700`}
+            className={`${containerStyles} border-b-[1px] border-zinc-200 dark:border-neutral-700`}
             scroll={false}
           >
             <span>계정</span>

@@ -4,7 +4,7 @@ import HeaderLayout from '@/layout/header';
 import EditableBox from '@/ui/editable-box';
 import { updateProfile } from '@/(bookshelf)/settings/profile/actions';
 
-const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] dark:border-neutral-700';
+const containerStyles = 'px-4 py-3 flex justify-between border-y-[1px] border-zinc-200 dark:border-neutral-700';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-10 before:text-neutral-500';
 
@@ -18,6 +18,11 @@ export default async function ProfileSettings() {
       <HeaderLayout backButtonText="설정" title="계정" />
 
       <div className="pt-10 flex flex-col gap-12 *:bg-white *:dark:bg-zinc-800">
+        <div data-before="사용자 ID (변경 불가)" className={`${beforePseudoElementStyles} ${containerStyles}`}>
+          <span>
+            {user.username.slice(0, 5)} {user.username.slice(5)}
+          </span>
+        </div>
         <div data-before="이름" className={`${beforePseudoElementStyles} ${containerStyles}`}>
           <EditableBox id={user.id} field="name" text={user.name ?? ''} onUpdate={updateProfile} />
         </div>

@@ -1,34 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useSetAtom } from 'jotai';
 import Search from '@/ui/search';
-import { keywordListAtom } from '@/store/atoms';
 
 type Props = {
-  query: string;
-  target: string;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function SearchForm({ query, target }: Props) {
-  const router = useRouter();
-  const setKeywordList = useSetAtom(keywordListAtom);
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const params = { query, target };
-    const formattedParams = new URLSearchParams(params).toString();
-
-    router.push(`/books/add/list?${formattedParams}`);
-    setKeywordList((prev) => {
-      if (!prev.includes(query)) {
-        return [...prev, query];
-      }
-      return prev;
-    });
-  };
-
+export default function SearchForm({ onSubmit }: Props) {
   return (
     <form onSubmit={onSubmit} className="flex gap-2">
       <Search wrapperClassName="flex-grow basis-4/5" />
