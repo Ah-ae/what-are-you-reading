@@ -6,14 +6,16 @@ import { StarIcon as SolidStarIcon } from '@heroicons/react/24/solid';
 import { updateRating } from '@/(bookshelf)/mine/[id]/actions';
 
 const MAX_RATING = 5;
-const starIconStyles = 'size-5 text-sky-600 dark:text-blue-500 cursor-pointer';
-
 type Props = {
   rating: number;
   bookId: number;
+  readOnly?: boolean;
 };
 
-export default function StarRating({ rating, bookId }: Props) {
+export default function StarRating({ rating, bookId, readOnly = false }: Props) {
+  const starIconStyles = readOnly
+    ? 'size-5 text-sky-600 dark:text-blue-500'
+    : 'size-5 text-sky-600 dark:text-blue-500 cursor-pointer';
   const updateFn = (_: number, newRating: number) => newRating;
   const [optimisticRating, setOptimisticRating] = useOptimistic(rating, updateFn);
 
@@ -46,10 +48,11 @@ export default function StarRating({ rating, bookId }: Props) {
   };
 
   const stars = Array.from({ length: MAX_RATING }, (_, index) => {
+    const handleClick = readOnly ? undefined : () => onClick(index);
     return index < optimisticRating ? (
-      <SolidStarIcon key={index} className={starIconStyles} onClick={() => onClick(index)} />
+      <SolidStarIcon key={index} className={starIconStyles} onClick={handleClick} />
     ) : (
-      <StarIcon key={index} className={starIconStyles} onClick={() => onClick(index)} />
+      <StarIcon key={index} className={starIconStyles} onClick={handleClick} />
     );
   });
 
