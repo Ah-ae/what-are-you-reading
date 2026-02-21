@@ -14,10 +14,10 @@ export default function FriendBookshelfCard({ friend }: Props) {
             alt={friend.name}
             width={48}
             height={48}
-            className="size-12 rounded-full object-cover"
+            className="size-12 shrink-0 rounded-full object-cover"
           />
         ) : (
-          <div className="size-12 bg-gray-100 rounded-full" />
+          <div className="size-12 shrink-0 rounded-full bg-gray-100" />
         )}
         <div className="flex flex-col min-w-0">
           <span className="font-semibold">{friend.name}</span>
