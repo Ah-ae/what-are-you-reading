@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import DefaultAvatar from '@/ui/default-avatar';
 import type { FriendInfo } from '@/types/friends';
 import { acceptFriendRequest, rejectFriendRequest } from '@/friends/actions';
 
@@ -44,7 +45,7 @@ export default function FriendCard({ friend }: Props) {
           className="size-14 rounded-full object-cover"
         />
       ) : (
-        <div className="size-14 bg-gray-100 rounded-full" />
+        <DefaultAvatar className="size-14" />
       )}
       <div className="flex flex-col">
         <span className="font-semibold">{friend.name}</span>
