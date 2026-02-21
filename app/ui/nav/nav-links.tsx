@@ -21,7 +21,7 @@ const links = [
   { name: '설정', href: '/settings', defaultIcon: Cog6ToothIcon, selectedIcon: SolidCog6ToothIcon },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ pendingRequestCount }: { pendingRequestCount: number }) {
   const pathname = usePathname();
 
   return (
@@ -34,13 +34,16 @@ export default function NavLinks() {
         return (
           <li key={`link-${index}`} className="h-10 md:h-12 px-3 flex-center grow gap-2 rounded-md text-xs font-medium">
             <Link href={link.href} scroll={false} className="text-main-theme-color dark:text-gray-100">
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center relative">
                 {pathname.startsWith(link.href) ? (
                   <SelectedLinkIcon className="w-6" />
                 ) : (
                   <DefaultLinkIcon className="w-6" />
                 )}
                 <span>{link.name}</span>
+                {link.href === '/settings' && pendingRequestCount > 0 && (
+                  <span className="absolute -top-0.5 -right-1.5 w-2 h-2 rounded-full bg-red-500" />
+                )}
               </div>
             </Link>
           </li>

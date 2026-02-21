@@ -25,7 +25,12 @@ export default async function FriendsSettings() {
         <Tabs defaultValue="list">
           <TabsList>
             <TabsTrigger value="list">목록</TabsTrigger>
-            <TabsTrigger value="request">신청</TabsTrigger>
+            <TabsTrigger value="request">
+              <span className="relative">
+                신청
+                {requests.length > 0 && <span className="absolute top-0 -right-3 w-2 h-2 rounded-full bg-red-500" />}
+              </span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="list">
