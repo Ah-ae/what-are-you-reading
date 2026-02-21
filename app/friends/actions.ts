@@ -162,6 +162,17 @@ export async function getFriendsList(): Promise<FriendInfo[]> {
   });
 }
 
+export async function getPendingRequestCount(): Promise<number> {
+  const userId = await getSessionUserId();
+
+  return db.friendship.count({
+    where: {
+      receiverId: userId,
+      status: 'PENDING',
+    },
+  });
+}
+
 export async function getPendingRequests(): Promise<FriendInfo[]> {
   const userId = await getSessionUserId();
 

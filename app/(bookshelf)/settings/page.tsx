@@ -3,12 +3,15 @@ import { redirect } from 'next/navigation';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import getSession from '@/lib/session';
 import HeaderLayout from '@/layout/header';
+import { getPendingRequestCount } from '@/friends/actions';
 
 const containerStyles = 'px-4 py-3 flex justify-between';
 const beforePseudoElementStyles =
   'before:content-[attr(data-before)] before:absolute before:-translate-y-10 before:text-neutral-500';
 
 export default async function Settings() {
+  const pendingCount = await getPendingRequestCount();
+
   const logout = async () => {
     'use server';
     const session = await getSession();
@@ -31,7 +34,10 @@ export default async function Settings() {
             <ChevronRightIcon className="size-5 text-zinc-400" />
           </Link>
           <Link href="/settings/friends" className={containerStyles} scroll={false}>
-            <span>친구 관리</span>
+            <span className="relative">
+              친구 관리
+              {pendingCount > 0 && <span className="absolute top-0 -right-3 w-2 h-2 rounded-full bg-red-500" />}
+            </span>
             <ChevronRightIcon className="size-5 text-zinc-400" />
           </Link>
         </div>
