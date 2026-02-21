@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import DefaultAvatar from '@/ui/default-avatar';
 import type { FriendInfo } from '@/types/friends';
 import { acceptFriendRequest, rejectFriendRequest } from '@/friends/actions';
 
@@ -31,6 +32,7 @@ export default function FriendCard({ friend }: Props) {
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
+    hour12: false,
   });
 
   return (
@@ -41,20 +43,20 @@ export default function FriendCard({ friend }: Props) {
           alt={friend.name}
           width={56}
           height={56}
-          className="size-14 rounded-full object-cover"
+          className="size-12 rounded-full object-cover"
         />
       ) : (
-        <div className="size-14 bg-gray-100 rounded-full" />
+        <DefaultAvatar className="size-12" />
       )}
       <div className="flex flex-col">
         <span className="font-semibold">{friend.name}</span>
-        <span className="text-sm">
+        <span className="text-xs">
           {friend.username.slice(0, 5)} {friend.username.slice(5)}
         </span>
-        {isPending && <span className="text-sm text-neutral-500">신청일 | {formattedDate}</span>}
+        {isPending && <span className="text-xs text-neutral-500">신청일 | {formattedDate}</span>}
       </div>
       {isPending && (
-        <div className="ml-auto flex gap-1">
+        <div className="ml-auto flex gap-2">
           <button
             onClick={handleReject}
             disabled={loading}

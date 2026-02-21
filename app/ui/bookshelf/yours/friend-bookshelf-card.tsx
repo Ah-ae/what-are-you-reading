@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import DefaultAvatar from '@/ui/default-avatar';
 import type { FriendWithLatestBook } from '@/(bookshelf)/yours/actions';
 
 type Props = { friend: FriendWithLatestBook };
@@ -14,10 +15,10 @@ export default function FriendBookshelfCard({ friend }: Props) {
             alt={friend.name}
             width={48}
             height={48}
-            className="size-12 rounded-full object-cover"
+            className="size-12 shrink-0 rounded-full object-cover"
           />
         ) : (
-          <div className="size-12 bg-gray-100 rounded-full" />
+          <DefaultAvatar />
         )}
         <div className="flex flex-col min-w-0">
           <span className="font-semibold">{friend.name}</span>

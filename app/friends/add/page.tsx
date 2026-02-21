@@ -3,6 +3,7 @@
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import DefaultAvatar from '@/ui/default-avatar';
 import HeaderLayout from '@/layout/header';
 import SearchForm from '@/ui/books/search-form';
 import {
@@ -89,7 +90,7 @@ function AddFriendContent() {
                       className="size-14 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="size-14 bg-gray-100 rounded-full" />
+                    <DefaultAvatar className="size-14" />
                   )}
                   <div className="flex flex-col">
                     <span className="font-semibold">{user.name}</span>
