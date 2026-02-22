@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { CheckIcon } from '@heroicons/react/24/outline';
-import { formatKoreanDate } from '@/utils/date';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import { createBook, getMoreBooks, type KaKaoBookResponse } from '@/books/add/list/actions';
 import { IMAGE_ASPECT_RATIO } from '@/constants/style';
 
@@ -121,7 +122,7 @@ function BookCard({
             {translators.length > 0 && `${translators.join(', ')} 옮김`}
           </span>
           <span>{publisher}</span>
-          <span className="">{formatKoreanDate(datetime)}</span>
+          <span className="">{format(datetime, 'yyyy년 M월 d일', { locale: ko })}</span>
         </div>
       </div>
       <div

@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
+import BookLoanTag from '@/ui/bookshelf/book-loan-tag';
 import { getImageSize } from '@/utils/image';
 import { IMAGE_ASPECT_RATIO, SCALE_FACTOR } from '@/constants/style';
+import type { LoanStatus } from '@/types/loan';
 
-type Props = { id: number; thumbnail: string; title: string; basePath: string };
+type Props = { id: number; thumbnail: string; title: string; basePath: string; loanStatus?: LoanStatus | null };
 
-export default function ReadOnlyBookThumbnail({ id, thumbnail, title, basePath }: Props) {
+export default function ReadOnlyBookThumbnail({ id, thumbnail, title, basePath, loanStatus }: Props) {
   const { width, height } = getImageSize(thumbnail);
 
   if (!width || !height) {
@@ -19,8 +21,9 @@ export default function ReadOnlyBookThumbnail({ id, thumbnail, title, basePath }
         pathname: `${basePath}/${id}`,
         query: { thumbnail, title },
       }}
-      className="cursor-pointer"
+      className="relative cursor-pointer"
     >
+      {loanStatus && <BookLoanTag type={loanStatus} />}
       <Image
         src={thumbnail}
         alt={title}

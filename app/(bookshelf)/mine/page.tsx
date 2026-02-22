@@ -2,9 +2,11 @@ import Link from 'next/link';
 import { unstable_cache as nextCache } from 'next/cache';
 import { getUser } from '@/lib/data';
 import { getBooks } from '@/(bookshelf)/mine/actions';
+import { getBorrowedBooks, getLentBookIds } from '@/(bookshelf)/loan/queries';
 import HeaderLayout from '@/layout/header';
 import { ActionButtons, ToggleButtons } from '@/ui/bookshelf/mine/header-items';
 import BookThumbnail from '@/ui/bookshelf/book-thumbnail';
+import ReadOnlyBookThumbnail from '@/ui/bookshelf/readonly-book-thumbnail';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 const getCachedBooks = nextCache(getBooks, ['my-book-list'], {
@@ -26,8 +28,12 @@ export default async function Mine() {
     );
   }
 
-  const books = await getCachedBooks(user.id);
-  const hasBooks = books.length > 0;
+  const [books, borrowedBooks, lentBookIds] = await Promise.all([
+    getCachedBooks(user.id),
+    getBorrowedBooks(user.id),
+    getLentBookIds(user.id),
+  ]);
+  const hasBooks = books.length > 0 || borrowedBooks.length > 0;
 
   return (
     <>
@@ -35,8 +41,24 @@ export default async function Mine() {
       <div className="flex justify-center p-6 md:p-10">
         <div className="grid grid-cols-3 gap-x-8 gap-y-5 md:gap-x-14 md:gap-y-14">
           <>
+            {borrowedBooks.map((loan) => (
+              <ReadOnlyBookThumbnail
+                key={`borrowed-${loan.book.id}`}
+                id={loan.book.id}
+                thumbnail={loan.book.thumbnail}
+                title={loan.book.title}
+                basePath={`/yours/${loan.lender.id}`}
+                loanStatus="borrowed"
+              />
+            ))}
             {books.map((book) => (
-              <BookThumbnail key={book.id} id={book.id} thumbnail={book.thumbnail} title={book.title} />
+              <BookThumbnail
+                key={book.id}
+                id={book.id}
+                thumbnail={book.thumbnail}
+                title={book.title}
+                loanStatus={lentBookIds.includes(book.id) ? 'lent' : null}
+              />
             ))}
             <Link
               href="/books/add"
