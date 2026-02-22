@@ -30,6 +30,9 @@ model User {
   // 친구 관계 필드 추가
   requester_friendships Friendship[] @relation("requester_friendships")
   receiver_friendships  Friendship[] @relation("receiver_friendships")
+  // 대출 관계 필드
+  lender_loans          Loan[]       @relation("lender_loans")
+  borrower_loans        Loan[]       @relation("borrower_loans")
 }
 
 model Bookshelf {
@@ -56,6 +59,7 @@ model Book {
   updated_at  DateTime         @updatedAt
   Bookshelf   Bookshelf        @relation(fields: [bookshelfId], references: [id])
   bookshelfId Int
+  loans       Loan[]
 }
 
 model Author {
@@ -107,4 +111,21 @@ model Friendship {
   @@unique([requesterId, receiverId]) // 동일한 사용자 간의 중복 요청 방지
   @@index([requesterId])
   @@index([receiverId])
+}
+
+model Loan {
+  id           Int       @id @default(autoincrement())
+  book         Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId       Int
+  lender       User      @relation("lender_loans", fields: [lenderId], references: [id])
+  lenderId     Int
+  borrower     User?     @relation("borrower_loans", fields: [borrowerId], references: [id])
+  borrowerId   Int? // 미등록 친구면 null
+  borrowerName String? // 미등록 친구 이름
+  lent_at      DateTime  @default(now())
+  returned_at  DateTime? // null = 대출중, 값 있으면 반납 완료
+
+  @@index([bookId])
+  @@index([lenderId])
+  @@index([borrowerId])
 }

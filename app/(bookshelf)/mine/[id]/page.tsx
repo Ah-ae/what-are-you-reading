@@ -3,10 +3,15 @@ import Image from 'next/image';
 import { unstable_cache as nextCache } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { getBook, updateReview } from '@/(bookshelf)/mine/[id]/actions';
+import { getActiveLoan } from '@/(bookshelf)/loan/queries';
 import HeaderLayout from '@/layout/header';
 import EditableBox from '@/ui/editable-box';
 import InvalidThumbnail from '@/ui/invalid-thumbnail';
+import BookLoanTag from '@/ui/bookshelf/book-loan-tag';
 import DeleteBookButton from '@/ui/books/delete-book-button';
+import LendBookButton from '@/ui/books/lend-book-button';
+import LoanInfoSection from '@/ui/books/loan-info-section';
+import ReturnBookButton from '@/ui/books/return-book-button';
 import StarRating from '@/ui/books/star-rating';
 import { getImageSize } from '@/utils/image';
 import { formatKoreanDate } from '@/utils/date';
@@ -35,9 +40,13 @@ export default async function BookDetail({ params }: Props) {
   // url에 /books/abc 처럼 숫자가 아닌 id를 직접 입력하고 진입할 때
   if (Number.isNaN(id)) return notFound();
 
-  const book = await getCachedBook(id);
+  const [book, activeLoan] = await Promise.all([getCachedBook(id), getActiveLoan(id)]);
   // db에 해당 id의 book이 없을 때
   if (!book) return notFound();
+
+  const borrowerDisplayName = activeLoan
+    ? (activeLoan.borrower?.name ?? activeLoan.borrowerName ?? '알 수 없음')
+    : null;
 
   const { title, thumbnail, datetime, price, authors, translators, publisher, url, isbn, rating, review, created_at } =
     book;
@@ -62,14 +71,17 @@ export default async function BookDetail({ params }: Props) {
             <h3 className="py-2 text-lg font-semibold text-center">{title}</h3>
             <div className="px-6 py-2 flex justify-between">
               {width && height ? (
-                <Image
-                  src={thumbnail}
-                  alt={title}
-                  className="border shadow-xl"
-                  width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
-                  height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
-                  priority
-                />
+                <div className="relative">
+                  {activeLoan && <BookLoanTag type="lent" />}
+                  <Image
+                    src={thumbnail}
+                    alt={title}
+                    className="border shadow-xl"
+                    width={IMAGE_ASPECT_RATIO.WIDTH * SCALE_FACTOR}
+                    height={IMAGE_ASPECT_RATIO.HEIGHT * SCALE_FACTOR}
+                    priority
+                  />
+                </div>
               ) : (
                 <InvalidThumbnail />
               )}
@@ -88,6 +100,8 @@ export default async function BookDetail({ params }: Props) {
             ))}
           </div>
         </div>
+
+        {activeLoan && <LoanInfoSection type="lent" personName={borrowerDisplayName!} lentAt={activeLoan.lent_at} />}
 
         <div className={containerStyles}>
           <p className={`flex ${itemStyles}`}>
@@ -114,7 +128,10 @@ export default async function BookDetail({ params }: Props) {
           </Link>
         </div>
 
-        <DeleteBookButton bookId={id} />
+        <div className="flex flex-col gap-4 !bg-transparent">
+          {activeLoan ? <ReturnBookButton loanId={activeLoan.id} /> : <LendBookButton bookId={id} />}
+          <DeleteBookButton bookId={id} />
+        </div>
       </section>
     </>
   );
