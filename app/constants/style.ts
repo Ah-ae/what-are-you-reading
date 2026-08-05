@@ -1,5 +1,8 @@
 export const MAX_WIDTH = 'max-w-md';
 
+export const SAFE_TOP = 'pt-[env(safe-area-inset-top)]';
+export const HEADER_TOP_OFFSET = 'pt-[calc(3rem+env(safe-area-inset-top))]';
+
 export const IMAGE_ASPECT_RATIO = {
   WIDTH: 20,
   HEIGHT: 29,

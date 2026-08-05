@@ -48,8 +48,8 @@ export default function AddBook({
     <>
       <HeaderLayout title="검색 목록" rightItem={<DeleteKeywordsButton />} />
 
-      {/* Note: `pt-12` - header height만큼 공간 확보 + page section의 자체 패딩 */}
-      <section className="pt-16 px-3 pb-4">
+      {/* Note: header height(3rem) + safe-area + 자체 패딩 */}
+      <section className="pt-[calc(4rem+env(safe-area-inset-top))] px-3 pb-4">
         <SearchForm onSubmit={handleSubmit} />
         <Tab tabs={tabs} />
         <KeywordList />
