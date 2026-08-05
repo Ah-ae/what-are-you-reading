@@ -6,8 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: '요즘뭐보니',
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
-    theme_color: '#ffffff',
+    background_color: '#0a0a0a',
+    theme_color: '#0a0a0a',
     icons: [
       {
         src: '/icon-192x192.png',
