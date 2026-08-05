@@ -1,3 +1,4 @@
+// Usage: npm i -D sharp@0.32.6 && node scripts/generate-splash.mjs
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
