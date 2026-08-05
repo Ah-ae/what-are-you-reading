@@ -12,7 +12,7 @@ export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
 
   return (
-    <div className="px-6 py-8 flex flex-col gap-10">
+    <div className="px-6 pt-[calc(2rem+env(safe-area-inset-top))] pb-8 flex flex-col gap-10">
       <div className="flex flex-col gap-2 *:font-medium text-xl">
         <p>안녕하세요!</p>
         <p>아래 양식을 작성해 주세요.</p>

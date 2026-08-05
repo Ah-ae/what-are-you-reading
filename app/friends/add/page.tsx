@@ -71,8 +71,8 @@ function AddFriendContent() {
     <>
       <HeaderLayout title="친구 추가" />
 
-      {/* Note: `pt-12` - header height만큼 공간 확보 + page section의 자체 패딩 */}
-      <section className="pt-16 px-3 pb-4">
+      {/* Note: header height(3rem) + safe-area + 자체 패딩 */}
+      <section className="pt-[calc(4rem+env(safe-area-inset-top))] px-3 pb-4">
         <SearchForm onSubmit={handleSubmit} placeholder="친구 이름을 입력하세요" />
 
         {searched && results.length > 0 ? (
