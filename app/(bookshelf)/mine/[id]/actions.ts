@@ -72,5 +72,8 @@ export async function deleteBook(bookId: number) {
     },
   });
 
+  revalidateTag(`book-${bookId}`);
+  revalidateTag('my-book-list');
+
   redirect('/mine');
 }
